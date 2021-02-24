@@ -1,0 +1,82 @@
+
+% typesetting
+\usepackage{amsmath}     % advanced math
+\usepackage{mathtools}
+\usepackage{bm}
+%\usepackage{amssymb}     % math symbols (square)
+%\usepackage{dsfont}      % for mathds (identity matrix symbol)
+\usepackage{commath}     % correct math differential typesetting (ISO 31/X)
+\usepackage{siunitx}     % SI units formatting
+\sisetup{output-exponent-marker=\ensuremath{\mathrm{e}}}
+%\sisetup{output-exponent-marker=}
+
+\usepackage{microtype}
+\usepackage{mleftright}
+
+% linking
+\usepackage{hyperref}
+\hypersetup{
+  bookmarks=true,
+  unicode=true,
+  pdftitle={Dispersion toolkit manual},
+  pdfauthor={The contributors},
+  pdfsubject={documentation},
+  pdfcreator={LaTeX},
+  pdfkeywords={dispersion, manual, documentation},
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  filecolor=black,
+  urlcolor=black,
+  linktoc=page
+}
+
+% language
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+% paragraph
+\usepackage{titlesec}
+\titleformat{\paragraph}
+    {\normalfont\bfseries}
+    {}
+    {0pt}
+    {}
+\usepackage{parskip}
+    
+% bibliography
+\usepackage[backend=biber
+  ,style=alphabetic
+  ,sorting=anyt
+  ,maxalphanames=1
+  ,block=none]{biblatex}
+\renewcommand*{\bibfont}{\footnotesize}
+
+% figures
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+% picture drawing package
+\RequirePackage{tikz}
+
+% tabulars
+\usepackage{booktabs}
+\setlength{\tabcolsep}{12pt}
+
+% define matters
+% thanks to: https://tex.stackexchange.com/questions/345263/latex-article-frontmatter
+\def\frontmatter{%
+    \pagenumbering{roman}
+    \setcounter{page}{1}
+    \renewcommand{\thesection}{\Roman{section}}
+}%
+\def\mainmatter{%
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \setcounter{section}{0}
+    \renewcommand{\thesection}{\arabic{section}}
+}%
+\def\backmatter{%
+    \setcounter{section}{0}
+    \renewcommand{\thesection}{\Alph{section}}
+}%

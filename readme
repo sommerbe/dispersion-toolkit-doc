@@ -1,0 +1,16 @@
+
+# Build instruction
+
+Please use the provided Makefile, leading to executing 
+
+make
+
+As an alternative, using
+
+lualatex document.tex
+
+or
+
+latexmk -pdf -lualatex document.tex
+
+leads to the equal result.

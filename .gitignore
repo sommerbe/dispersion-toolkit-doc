@@ -1,0 +1,9 @@
+document.*
+!document.tex
+*.aux
+*.png
+*.jpg
+*.pgf
+*.pfm
+*.pdf
+*.pyc

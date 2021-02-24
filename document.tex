@@ -1,0 +1,36 @@
+\documentclass[12pt,a4paper]{extbook}
+
+\input{preamble}
+\input{mathsymbols}
+\input{hyphenation}
+
+\addbibresource{bibliography.bib}
+
+%\makeatletter
+\title{Dispersion toolkit documentation}
+\author{The contributors}
+\date{24. February 2021}
+
+\begin{document}
+\frontmatter
+\maketitle
+\input{acknowledgements}
+\tableofcontents
+\clearpage
+
+\mainmatter
+\input{ch-intro}
+\input{ch-sets}
+\input{ch-measures}
+\input{ch-opt}
+\input{ch-vis}
+\input{ch-transduce}
+\input{ch-credits}
+
+\clearpage
+
+\backmatter
+\appendix
+\printbibliography[heading=bibintoc]
+
+\end{document}
