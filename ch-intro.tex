@@ -1,1 +1,11 @@
 \chapter{Introduction}
+
+This dispersion toolkit is a set of computational capabilities to analyse diverse  point sets with respect to the actual distribution of empty regions. The concept of measuring these regions is broadly termed as dispersion.
+
+Care remains important in distinguishing this measure from discrepancy, expressing the deviation between a finite point set and an ideal uniform distribution. The need of the latter arises with applying stochastic Riemannian integration to numerically solving integral equations, for instance by using Monte Carlo methods.
+
+Before measuring dispersion, point sets in $\sdim$-dimensions are generated through a set of programs, producing a stream of sets. Feeding this stream to programs measuring a particular form of dispersion yields a, deterministic or stochastic, description of how specific empty regions are distributed. The resulting stream of descriptive numbers is finally represented by a concise statistics.
+
+Seeking either ideas or even answers to how point sets could or can be improved regarding a specific dispersion measure may lead through optimising them, numerically. Although the returned stream of sets might be difficult to mathematically formalise with a closed-form approach, visualising them might be constructive. Besides, potential improvement becomes investigatable through measuring concise statistics.
+
+A widespread availability of point set generating programs infers a need to transduce them to the internal format of streaming point sets within the computing extent of this toolkit.
