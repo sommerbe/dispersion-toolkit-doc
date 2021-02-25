@@ -1,0 +1,45 @@
+
+The Fibonacci lattice\footnote{For more information, refer to \ct{kritzinger2020}.} based on the Fibonacci number $F_i$ was defined as
+\begin{align*}
+  F_i &\coloneqq \begin{cases}
+    F_{i-2} + F_{i-1} & \text{if}\ i \in \mathbb N_{\geq 3}, \\
+    1 & \text{if}\ i \in \{1,2\},
+  \end{cases}\\
+  \{r\} &\coloneqq r - \lfloor r \rfloor,\ \forall r \in \mathbb R_{> 0}, \\
+  \fnPi{F}(m) &\coloneqq \mleft\{ \mleft(k F_m^{-1},\ \{k F_{m-2} F_m^{-1}\} \mright)\ .\ \forall k \in [0,F_m-1]_{\mathbb N_0} \mright\},
+\end{align*}
+while \cto[p.~70]{graham1994} defined the fractional part $\{r\}$.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{set-fibonacci}{--fibonacci-index|--m=$i$\newline 
+[--o FILE] [--delimiter=CHARACTER] [--silent]}
+  \subsynopsis{set-fibonacci}{--fibonacci-index|--m=$i$\newline
+--compute-fibonacci-number|--cardinality [--no-pointset]\newline
+[--o FILE] [--delimiter=CHARACTER] [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\begin{procarg}{--fibonacci-index=$i$ | --m=$i$}
+  The Fibonacci index $i$ of the Fibonacci number $F_i$ is required to satisfy $i > 2$. The cardinality of the resulting point set equals $F_i$.
+\end{procarg}
+
+\begin{procarg}{--compute-fibonacci-number | --cardinality}
+  Computes the point set’s cardinality and feeds it to the output stream. Here, this cardinality equals the Fibonacci number $F_i$, where $i$ is the Fibonacci index.
+\end{procarg}
+
+\begin{procarg}{--no-pointset}
+  Emit no point set. Useful when measuring cardinality only.
+\end{procarg}
+
+\procargout
+
+\procargdelimiter
+
+\procargsilent
+
+\paragraph{Limitations}
+The Fibonacci lattice will be two-dimensional, only.
+

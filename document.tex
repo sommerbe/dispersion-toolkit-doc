@@ -1,8 +1,23 @@
-\documentclass[12pt,a4paper]{extbook}
+\documentclass[12pt,a4paper,refnotes]{extbook}
 
 \input{preamble}
 \input{mathsymbols}
 \input{hyphenation}
+
+\newcommand{\procargout}{%
+\begin{procarg}{--o FILE | --o=FILE}
+  Redirects the computed results to \codef{FILE}, opened in overwrite mode (not appending mode). Without \codef{FILE}, results are forwarded to stdout. Errors encountered during the  program’s execution are streamed into stderr, and not into either stdout or \codef{FILE}.
+\end{procarg}}
+
+\newcommand{\procargdelimiter}{%
+\begin{procarg}{--delimiter=CHARACTER}
+  Define a delimiter character to separate coordinates of a point in the resulting output. A usual \codef{CHARACTER} could be empty space (\codef{' '}) or tabular character (\codef{'\chartab'}), for instance.
+\end{procarg}}
+
+\newcommand{\procargsilent}{%
+\begin{procarg}{--silent}
+  Suppress comments in the output stream, yielding only the computed value. The latter could be the point set or its cardinality.
+\end{procarg}}
 
 \addbibresource{bibliography.bib}
 
