@@ -13,13 +13,16 @@
 
 \ifdefined\refnotedraft
   \RequirePackage{marginnote}
-  \newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}
+%  \newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}
+  \newcommand{\refnotecol}[1]{\textcolor[RGB]{128,128,128}{#1}}
+  %\newcommand{\refnotecoltext}[1]{\textcolor[RGB]{21,101,192}{#1}}
+  \newcommand{\refnotecoltext}[1]{#1}
   \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
-  \newcommand{\cc}[1]{\refnotecol{\cite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cp}[1]{\refnotecol{\parencite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cpo}[2][]{\refnotecol{\parencite[#1]{#2}}\refnoteaside{[> #2]}}
-  \newcommand{\ct}[1]{\refnotecol{\textcite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cto}[2][]{\refnotecol{\textcite[#1]{#2}}\refnoteaside{[> #2]}}
+  \newcommand{\cc}[1]{\refnotecoltext{\cite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cpo}[2][]{\refnotecoltext{\parencite[#1]{#2}}\refnoteaside{[> #2]}}
+  \newcommand{\ct}[1]{\refnotecoltext{\textcite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cto}[2][]{\refnotecoltext{\textcite[#1]{#2}}\refnoteaside{[> #2]}}
   \newcommand{\mref}[1]{\ref{#1}\refnoteaside{[> #1]}}
   \newcommand{\mlabel}[1]{\label{#1}\refnoteaside{/#1}}
 \else
