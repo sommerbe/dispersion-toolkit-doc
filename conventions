@@ -1,3 +1,8 @@
+# Language
+
+The entire text of this document has to be written in UK English.
+
+
 # Figures
 
 All figures are to be produced directly using tikz. Figures using includegraphics{} to include raster graphics directly is not allowed, and likewise for PDFs. These figures scale badly with respect to typography consistency.
