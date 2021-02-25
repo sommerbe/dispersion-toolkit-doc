@@ -2,10 +2,16 @@
 
 \input{preamble}
 \input{mathsymbols}
+\input{textsymbols}
 \input{hyphenation}
 
+\newcommand{\procarginseq}[1]{%
+\begin{procarg}{--i=FILE | --i FILE}
+  Retrieves a point set sequence of size $#1$ from \codef{FILE}, meaning a single point set. Its absence is substituted by stdin. The end of a point set, which equals the line \codef{\#eos}, starts the algorithm.
+\end{procarg}}
+
 \newcommand{\procargout}{%
-\begin{procarg}{--o FILE | --o=FILE}
+\begin{procarg}{--o=FILE | --o FILE}
   Redirects the computed results to \codef{FILE}, opened in overwrite mode (not appending mode). Without \codef{FILE}, results are forwarded to stdout. Errors encountered during the  program’s execution are streamed into stderr, and not into either stdout or \codef{FILE}.
 \end{procarg}}
 

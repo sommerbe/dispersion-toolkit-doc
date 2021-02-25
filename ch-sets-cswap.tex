@@ -1,0 +1,72 @@
+
+Of any point set with dimension
+\begin{align*}
+  d > 0,
+\end{align*}
+swapping coordinates of these points helps in analysing the behaviour of the set with respect to some measures. 
+
+The algorithm stochastically chooses 
+\begin{align*}
+  n\ \text{pairs of points}
+\end{align*}
+being indenpendently and uniformly identically distributed. An alternative Mersenne Twister, implemented as \codef{std::mt19937\_64} in the \symcpponeone{} standard generates the pseudo-random numbers employed for this purpose.
+
+Instead of explicitly stating $n$, the algorithm may choose $n$ as a function of both the point set's cardinality $\abs{\fnP}$ and a percentage $p$, using
+\begin{align}\label{eq:n-cswap}
+  n = n_{\text{cswap}}\mleft(\fnP, p\mright) \coloneqq \floor{\,p\abs{\fnP}},\quad p \in [0,1]_{\setR}.
+\end{align}
+In the absense of both $n$ and $p$,
+\begin{align*}
+  n=1.
+\end{align*}
+
+The axis,
+\begin{align*}
+  a \in \{0,1,...,d-1\}_{\setN},
+\end{align*}
+along which to swap is, by default, pseudo-randomly chosen. As an alternative, this additional randomisation may become deterministic by explicitly directing an axis index.
+
+The stochastic nature of this algorithm enables the streaming of point sets, leading to a sequence of
+\begin{align*}
+  r\ \text{point sets}, r > 0, r \in \setN.
+\end{align*}
+If a dispersion measuring procedure is applied to this stream, and subsequently applying a statistical descriptor, a statistics of this randomisation with respect to the chosen dispersion measure arises. This allows to investigate the initial point set from a stochastic perspective.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{set-cswap}{[--i FILE] [--o FILE]\newline
+  [(--count|--c)=$n$] [(--percentage|--p)=$p$]\newline
+  [--axis=($-1$|$a$)]\newline
+  [(--repeat|--r)=$r$]\newline
+  [--silent]}
+\end{synopsis}
+
+
+\paragraph{Arguments}
+
+\begin{procarg}{--count=$n$ | --c=$n$ | --count $n$ | –c $n$}
+  The number of pairs of points for which to swap their coordinates (pairwise). By default, $n$=1.
+\end{procarg}
+
+\begin{procarg}{--percentage=$p$ | --p=$p$ | --percentage $p$ | –p $p$}
+  The number of pairs of points, determined dynamically by evaluating (\mref{eq:n-cswap}).
+\end{procarg}
+
+\begin{procarg}{--axis=$-1$ | --axis=$a$ | --axis $a$}
+  The axis along which to swap the coordinates. Randomisation with respect to the axis is enabled with $a=-1$.
+\end{procarg}
+
+\begin{procarg}{--repeat=$r$ | --r=$r$ | --repeat $r$ | --r $r$}
+  The size of the resulting point set sequence.
+\end{procarg}
+
+\procarginseq{1}
+
+\procargout
+
+\procargdelimiter
+
+\procargsilent
+
+
