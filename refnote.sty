@@ -1,0 +1,35 @@
+% 
+% Placing identifiers of references (cross-references, bibliographic references) into margins
+%
+% Author: Benjamin Sommer
+% License: GNU GPL
+% 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{refnote}[2021/02/25 References' notes in margins]
+
+\DeclareOption{draft}{\providecommand{\refnotedraft}{}}
+\DeclareOption{refnotes}{\providecommand{\refnotedraft}{}}
+\ProcessOptions\relax
+
+\ifdefined\refnotedraft
+  \RequirePackage{marginnote}
+  \newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}
+  \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
+  \newcommand{\cc}[1]{\refnotecol{\cite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cp}[1]{\refnotecol{\parencite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cpo}[2][]{\refnotecol{\parencite[#1]{#2}}\refnoteaside{[> #2]}}
+  \newcommand{\ct}[1]{\refnotecol{\textcite{#1}}\refnoteaside{[> #1]}}
+  \newcommand{\cto}[2][]{\refnotecol{\textcite[#1]{#2}}\refnoteaside{[> #2]}}
+  \newcommand{\mref}[1]{\ref{#1}\refnoteaside{[> #1]}}
+  \newcommand{\mlabel}[1]{\label{#1}\refnoteaside{/#1}}
+\else
+  \newcommand{\cc}[1]{\cite{#1}}
+  \newcommand{\cp}[1]{\parencite{#1}}
+  \newcommand{\cpo}[2][]{\parencite[#1]{#2}}
+  \newcommand{\ct}[1]{\textcite{#1}}
+  \newcommand{\cto}[2][]{\textcite[#1]{#2}}
+  \newcommand{\mref}[1]{\ref{#1}}
+  \newcommand{\mlabel}[1]{\label{#1}}
+\fi
+
+\endinput
