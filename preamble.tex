@@ -89,3 +89,21 @@
 
 % references (intern, extern): helping tools
 \usepackage{refnote}
+
+% special characters
+\newcommand{\chartab}{\symbol{'134}t}
+
+
+% procedure argument typeface
+\newcommand{\codef}[1]{\texttt{#1}}
+
+% procedure synopsis
+\newenvironment{synopsis}%
+{\begin{description}}
+{\end{description}}
+
+\newcommand{\subsynopsis}[2]{\item[\codef{#1}] \codef{#2}}
+
+% procedure argument
+\newenvironment{procarg}[1]%
+{\codef{#1}\newline}{}
