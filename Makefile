@@ -7,5 +7,8 @@ all:
 document:
 	lualatex $(DOC)
 
+bib:
+	biber document
+
 clean:
 	latexmk -c $(DOC)
