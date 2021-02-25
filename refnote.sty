@@ -10,6 +10,7 @@
 \DeclareOption{draft}{\providecommand{\refnotedraft}{}}
 \DeclareOption{refnotes}{\providecommand{\refnotedraft}{}}
 \DeclareOption{blue}{\newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}}
+\DeclareOption{reverse}{\newcommand{\refnoteaside}[1]{\reversemarginpar\marginnote{\refnotecol{#1}\normalmarginpar}}}
 \ProcessOptions\relax
 
 \ifdefined\refnotedraft
@@ -20,7 +21,9 @@
   \ifdefined\refnotecoltext\else
     \newcommand{\refnotecoltext}[1]{#1}
   \fi
-  \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
+  \ifdefined\refnoteaside\else
+    \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
+  \fi
   \newcommand{\cc}[1]{\refnotecoltext{\cite{#1}}\refnoteaside{[> #1]}}
   \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{[> #1]}}
   \newcommand{\cpo}[2][]{\refnotecoltext{\parencite[#1]{#2}}\refnoteaside{[> #2]}}
