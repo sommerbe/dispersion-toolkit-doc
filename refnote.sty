@@ -9,14 +9,17 @@
 
 \DeclareOption{draft}{\providecommand{\refnotedraft}{}}
 \DeclareOption{refnotes}{\providecommand{\refnotedraft}{}}
+\DeclareOption{blue}{\newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}}
 \ProcessOptions\relax
 
 \ifdefined\refnotedraft
   \RequirePackage{marginnote}
-%  \newcommand{\refnotecol}[1]{\textcolor[RGB]{21,101,192}{#1}}
-  \newcommand{\refnotecol}[1]{\textcolor[RGB]{128,128,128}{#1}}
-  %\newcommand{\refnotecoltext}[1]{\textcolor[RGB]{21,101,192}{#1}}
-  \newcommand{\refnotecoltext}[1]{#1}
+  \ifdefined\refnotecol\else
+    \newcommand{\refnotecol}[1]{\textcolor[RGB]{128,128,128}{#1}}
+  \fi
+  \ifdefined\refnotecoltext\else
+    \newcommand{\refnotecoltext}[1]{#1}
+  \fi
   \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
   \newcommand{\cc}[1]{\refnotecoltext{\cite{#1}}\refnoteaside{[> #1]}}
   \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{[> #1]}}
