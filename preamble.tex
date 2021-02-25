@@ -80,3 +80,9 @@
     \setcounter{section}{0}
     \renewcommand{\thesection}{\Alph{section}}
 }%
+
+% section inclusion
+\newcommand{\chapterf}[2]{\chapter{#1}\input{#2}}
+\newcommand{\sectionf}[2]{\section{#1}\input{#2}}
+\newcommand{\subsectionf}[2]{\subsection{#1}\input{#2}}
+\newcommand{\subsubsectionf}[2]{\subsubsection{#1}\input{#2}}
