@@ -1,0 +1,47 @@
+
+Achieving smaller dispersion, \ct{kritzinger2020} modified this Fibonacci lattice with
+\begin{align*}
+  \mathcal Z_n &\coloneqq [0, n-1]_{\mathbb N_0}, \\
+  \pi(j) &\coloneqq j F_{m-2}\ \text{mod}\ F_m, \\
+  s(i) &\coloneqq \begin{cases}
+    \mleft(\sqrt{5}+1\mright)2^{-1} & \text{if}\ \pi(i) < \pi(i+1), \\
+    1 & \text{else},
+  \end{cases} \\
+  x_j &\coloneqq \sum_{i\,\in\,\mathcal Z_j} s(i), \\
+  \fnPi{K}(m) &\coloneqq \mleft\{ \bm s_k \coloneqq (x_k, x_{\pi(k)}) x_{n-1}^{-1}\ .\ \forall k \in \mathcal Z_n,\ n = F_m \mright\}.
+\end{align*}
+This construction yields a point set with smaller dispersion than the standard Fibonacci set, when using empty rectangles as regions with the area measure. In particular, these regions show a tendency to be larger in size closer to the domain boundary, while leading to more greatest empty regions within the entire domain.
+
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{set-kritzinger}{--fibonacci-index|--m=$i$\newline 
+[--o FILE] [--delimiter=CHARACTER] [--silent]}
+  \subsynopsis{set-kritzinger}{--fibonacci-index|--m=$i$\newline
+--compute-fibonacci-number|--cardinality [--no-pointset]\newline
+[--o FILE] [--delimiter=CHARACTER] [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\begin{procarg}{--fibonacci-index=$i$ | --m=$i$}
+  The Fibonacci index $i$ of the Fibonacci number $F_i$ is required to satisfy $i > 2$. The cardinality of the resulting point set equals $F_i$.
+\end{procarg}
+
+\begin{procarg}{--compute-fibonacci-number | --cardinality}
+  Computes the point set’s cardinality and feeds it to the output stream. Here, this cardinality equals the Fibonacci number $F_i$, where $i$ is the Fibonacci index.
+\end{procarg}
+
+\begin{procarg}{--no-pointset}
+  Emit no point set. Useful when measuring cardinality only.
+\end{procarg}
+
+\procargout
+
+\procargdelimiter
+
+\procargsilent
+
+\paragraph{Limitations}
+Kritzinger's modified Fibonacci lattice is two-dimensional, only.
