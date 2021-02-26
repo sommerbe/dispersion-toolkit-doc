@@ -1,0 +1,79 @@
+
+A procedure implementing a computation capability exposes its name
+\begin{align*}
+  \textbf{\codef{procedure-name}}
+\end{align*}
+as well as particular number of arguments. A single argument can be a pair of argument name and argument value,
+\begin{align*}
+  \codef{--arg-name=arg-value},
+\end{align*}
+or an argument flag either enabling or disabling a capability while having no value attached,
+\begin{align*}
+  \codef{-f}.
+\end{align*}
+Multiple flags can be concatenated such as
+\begin{align*}
+  \codef{-f}\ \codef{-b}\ \codef{-c} \equiv \codef{-fbc} \equiv \codef{-bfc} \equiv ... \equiv \codef{-fcb}.
+\end{align*}
+For clearity, the argument name might be explicitly written with a long equivalent name
+\begin{align*}
+  \codef{--arg-long-name} \equiv \codef{--arg-name}.
+\end{align*}
+All equivalent argument names are logically or'ed with
+\begin{align*}
+  \codef{argument-name} \coloneqq \codef{(--arg-name-0|--arg-name-1|..|--arg-name-$k$)}.
+\end{align*}
+For $k=0$,
+\begin{align*}
+  \codef{argument-name} \coloneqq \codef{--arg-name-0}.
+\end{align*}
+
+Together with the argument value, a particular argument becomes
+\begin{align*}
+  \codef{argument} \coloneqq& \codef{argument-name=arg-value} \\
+  &|\ \codef{-f}\ |\ \codef{-ab...}.
+\end{align*}
+An argument denoted as
+\begin{align*}
+  \codef{[argument]}
+\end{align*}
+is optional. Without these brackets, the argument is mandatory. A procedure call form
+\begin{align*}
+  \codef{call}(n) \coloneqq 
+  \textbf{\codef{procedure-name}}\texttt{\textvisiblespace }&
+  \codef{argument}\texttt{\textvisiblespace }\codef{argument}...\texttt{\textvisiblespace }\codef{argument}\texttt{\textvisiblespace } \\
+  &\codef{[argument]}\texttt{\textvisiblespace }\codef{[argument]}...\texttt{\textvisiblespace }\codef{[argument]}
+\end{align*}
+is therefore defined. Some mandatory arguments might trigger a different behaviour. Including all available call forms leads to the compact synopsis form
+\begin{align*}
+  &\codef{call}(0) \\
+  &\codef{call}(1) \\
+  &\vdots \\
+  &\codef{call}(n)\ . \\  
+\end{align*}
+Within this form, it shall be valid to replace the equal sign separating the argument name from its value by a whitespace character,
+\begin{align*}
+  \codef{argument-name}\texttt{\textvisiblespace }\codef{arg-value}.
+\end{align*}
+
+\paragraph{Examples}
+A compact synopsis form might, for instance, be defined as follows:
+\begin{synopsis}
+  \subsynopsis{executable}{--mandatory-argument="its value"\newline
+  [-abs] [--optional-argument="another value"]}
+  \subsynopsis{executable}{--another-mandatory-argument="value 2"\newline
+  [-zb] [--optional-argument="another value 3"]}
+  \subsynopsis{executable}{(--long-mandatory-name|--m)="value 2"\newline
+  [-zb] [--optional-argument="another value 3"]}
+\end{synopsis}
+The first form requires \codef{--mandatory-argument}, optionally accepts \codef{--optional-argument} as well as the flags \codef{-a}, \codef{-b} and \codef{-s}. The second form is similar. The third form, however, exposes two equivalent argument names, so
+\begin{synopsis}
+  \subsynopsis{executable}{--long-mandatory-name="value 2"\newline
+  [-zb] [--optional-argument="another value 3"]}
+\end{synopsis}
+and
+\begin{synopsis}
+  \subsynopsis{executable}{--m="value 2"\newline
+  [-zb] [--optional-argument="another value 3"]}
+\end{synopsis}
+are both equivalent procedure calls.
