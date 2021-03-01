@@ -15,6 +15,15 @@
 
 \ifdefined\refnotedraft
   \RequirePackage{marginnote}
+  \ifdefined\refnotefont\else
+    \newcommand{\refnotefont}{\scriptsize}
+  \fi
+  \ifdefined\refnoteref\else
+    \newcommand{\refnoteref}[1]{[#1]}
+  \fi
+  \ifdefined\refnotelabel\else
+    \newcommand{\refnotelabel}[1]{/#1}
+  \fi
   \ifdefined\refnotecol\else
     \newcommand{\refnotecol}[1]{\textcolor[RGB]{128,128,128}{#1}}
   \fi
@@ -22,15 +31,15 @@
     \newcommand{\refnotecoltext}[1]{#1}
   \fi
   \ifdefined\refnoteaside\else
-    \newcommand{\refnoteaside}[1]{\marginnote{\refnotecol{#1}}}
+    \newcommand{\refnoteaside}[1]{\marginnote{\refnotefont\refnotecol{#1}}}
   \fi
-  \newcommand{\cc}[1]{\refnotecoltext{\cite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cpo}[2][]{\refnotecoltext{\parencite[#1]{#2}}\refnoteaside{[> #2]}}
-  \newcommand{\ct}[1]{\refnotecoltext{\textcite{#1}}\refnoteaside{[> #1]}}
-  \newcommand{\cto}[2][]{\refnotecoltext{\textcite[#1]{#2}}\refnoteaside{[> #2]}}
-  \newcommand{\mref}[1]{\ref{#1}\refnoteaside{[> #1]}}
-  \newcommand{\mlabel}[1]{\label{#1}\refnoteaside{/#1}}
+  \newcommand{\cc}[1]{\refnotecoltext{\cite{#1}}\refnoteaside{\refnoteref{#1}}}
+  \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{\refnoteref{#1}}}
+  \newcommand{\cpo}[2][]{\refnotecoltext{\parencite[#1]{#2}}\refnoteaside{\refnoteref{#2}}}
+  \newcommand{\ct}[1]{\refnotecoltext{\textcite{#1}}\refnoteaside{\refnoteref{#1}}}
+  \newcommand{\cto}[2][]{\refnotecoltext{\textcite[#1]{#2}}\refnoteaside{\refnoteref{#2}}}
+  \newcommand{\mref}[1]{\ref{#1}\refnoteaside{\refnoteref{#1}}}
+  \newcommand{\mlabel}[1]{\label{#1}\refnoteaside{\refnotelabel{#1}}}
 \else
   \newcommand{\cc}[1]{\cite{#1}}
   \newcommand{\cp}[1]{\parencite{#1}}
