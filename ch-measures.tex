@@ -1,1 +1,33 @@
-\chapter{Dispersion measures}
+
+In \citeyear{hlawka1976disp}, \citeauthor{hlawka1976disp} described \enquote{Dichtigkeitsdiskrepanz} 
+\begin{align*}
+  \Delta(\omega) &\coloneqq \sup_{\varphi} \min_{j} \min_{g} L(\varphi, \theta_j, g),\ \text{with}\\
+  L(\varphi, \theta, g) &\coloneqq \abs{\varphi - \theta - g},\\
+  \omega &\coloneqq (\theta_1, \theta_2, ..., \theta_N),\quad g \in \mathbb Z,
+\end{align*}
+a problem seeking to find the greatest distance from $\varphi$ to $\theta_j$ and $g$ without having other numbers of the discrete $\theta_j$ and $g$ inbetween \cp{hlawka1976disp}. In other words, it could be viewed as an example of a greatest empty discrete interval problem.\footnote{This terminology shall be defined here, though it is hardly new due to its generality.}
+
+With the submission of the PhD dissertation, \cto[section 6.1.8]{shamos1978compgeom} defined the largest empty circle problem. Being mathematically equivalent except for $\sup$ instead of $\max$, \ct{niederreiter1979disp}\footnote{\cto[Definition]{niederreiter1983disp} defined this concept of dispersion again without referencing his previous publication in \citeyear{niederreiter1979disp}.} independently generalised the concept of \citeauthor{hlawka1976disp} with the introduction of \enquote{dispersion} in $d$-dimensions,\footnote{The notational symbols have been slightly changed without changing the mathematical meaning.}
+\begin{align*}
+  \fndisp(\mathcal E, n) &\coloneqq \sup_{\bm x \in \mathcal E} \min_{1 \leq i \leq n} d(\bm x, \bm x_{i}),\ \text{with}\\
+  &\bm x_1, \bm x_2, ..., \bm x_{n} \in \mathcal E\ \wedge\ \bm x_i \in \mathbb R^d,
+\end{align*}
+to compute the greatest empty distance between given points $\bm x_i$. 
+
+This dispersion measure need not to be limited to 1-simplices. For instance, \ct{rote1996disp} generalised this concept to 
+\begin{align*}
+  \text{ranges $\fnR$ equipped with a Lebesgue measure $\mu$.}
+\end{align*}
+A range $\fnR$ denotes a shape described with a fixed rule to reflect the size of a hole in the point set $\mathcal E$. The dispersion
+\begin{align}\mlabel{eq:disp-range}
+  \fndisp(\mathcal E, \fnR, \mu) \coloneqq \sup_{\bar R\,\in\,\mathcal R,\, \bar R\,\cap\,\mathcal E = \emptyset} \mu(\bar R)
+\end{align}
+measures the greatest range $\bar R$ out of all possible $\fnR$.
+
+This chapter introduces procedures measuring (\mref{eq:disp-range}) for particular shapes of $\fnR$ and dimension $d$. For equal $\fnR$ and $d$, this toolkit provides implementations of different algorithms contributed throughout academic history to establish to common base. A base which possibly improves both reproducibility and comparison of novel algorithms regarding computational performance. In following this goal, applying dispersion to solving problems, both practical and theoretical, might be expected to spread.
+
+
+
+
+
+
