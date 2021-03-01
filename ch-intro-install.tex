@@ -11,3 +11,25 @@ accomplishes this goal, while being in the build directory as discussed in the p
 \codeline{make install}
 can be invoked after a successfull build.
 
+
+\paragraph{Windows Operating Systems: Visual Studio}
+
+In the Windows Operating Systems, using Visual Studio, installation into the default directory
+\codeline{C:/Program Files (x86)/dispersion-toolkit}
+requires administrator priviledges. In this matter, the powershell with elevated rights needs to be started, for instance with
+\codeline{start-process powershell -verb runas}
+or directly from the Windows File Explorer. With being in the previously created
+\codeline{./dispersion-toolkit/build}
+directory, the Visual Studio solution of this project is open with
+\codeline{./dispersion-toolkit.sln}
+in administrator mode. This situation can be confirmed by investigating the title bar of Visual Studio, now containing \enquote{Administrator}. Installation is accomplished with building the sub project
+\codeline{INSTALL}
+through right click on it while choosing \codef{Build}. After successful execution, the installation directory now contains the build executables within the
+\codeline{C:/Program Files (x86)/dispersion-toolkit/bin}
+directory.
+
+A custom installation directory is set with
+\codeline{CMAKE .. -DCMAKE\_INSTALL\_PREFIX="C:/dispersion-toolkit"}
+which might not require administrator priviledges. The current install directory can be checked by opening \codef{CMakeCache.txt} and, therein, reading the line starting with
+\codeline{CMAKE\_INSTALL\_PREFIX:PATH=}
+upon which follows the actually used installation path.
