@@ -1,0 +1,44 @@
+To begin with, the source of this toolkit is obtained by cloning the git repository
+\begin{align*}
+  \codef{git@github.com:sommerbe/dispersion-toolkit.git}
+\end{align*}
+using the command
+\begin{align*}
+  \codef{git clone git@github.com:sommerbe/dispersion-toolkit.git}
+\end{align*}
+which works in Linux Bash, Windows (cmd, PowerShell) as well as in MacOS. Within the cloned repository,
+\codeline{cd ./dispersion-toolkit},
+create an out of source build directory
+\codeline{mkdir build}
+and within it using
+\codeline{cd ./build}
+configure the build using CMake's
+\codeline{cmake ..}.
+CMake is obtained from \href{https://cmake.org/}{https://cmake.org/}.
+
+
+\paragraph{Linux Operating Systems: make}
+
+In Linux operating systems, the entire toolkit is built with
+\codeline{make -j$T$}
+where $T$ is the number of parallel builds, usually being the number of actual parallels threads the CPU supports, for instance $T=8$. Upon successful completion, the sub directory
+\codeline{cd ./bin}
+contains the procedures shipped by this toolkit. Being within this directory is henceforth assumed when working directly from this build directory, i.e. when installs are omitted.
+
+
+\paragraph{Windows Operating Systems: Visual Studio}
+
+The build directory contains the solution
+\codeline{dispersion-toolkit.sln}
+to be opened with Visual Studio. Executing a Debug build generates the procedures within
+\codeline{./bin/Debug}
+and within
+\codeline{./bin/Release}
+in case of release builds. Within
+\codeline{./bin}
+are located Python scripts. This is different to the make build system which stores both scripts and compiled binaries into \codef{./bin} where the build directory \codef{../build} is for instance debug or release mode.
+
+Running the compiled procedures henceforth assumes to, for instance,
+\codeline{cd ./bin/Debug}
+to enter the directory containing the executables in case of omitting installs.
+

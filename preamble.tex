@@ -107,3 +107,8 @@
 % procedure argument
 \newenvironment{procarg}[1]%
 {\codef{#1}\newline}{}
+
+% code enviornment
+\newcommand{\codeline}[1]{\begin{align*}
+  \codef{#1}
+\end{align*}}
