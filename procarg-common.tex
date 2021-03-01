@@ -1,6 +1,6 @@
 \newcommand{\procarginseq}[1]{%
 \begin{procarg}{--i=FILE | --i FILE}
-  Retrieves a point set sequence of size $#1$ from \codef{FILE}, meaning a single point set. Its absence is substituted by stdin. The end of a point set, which equals the line \codef{\#eos}, starts the algorithm.
+  Retrieves a point set sequence $\fnP_i$ of size $#1$ from \codef{FILE}, with $i \in [0,#1)$. Its absence is substituted by stdin. The end of a point set, which equals the line \codef{\#eos}, starts the algorithm.
 \end{procarg}}
 
 \newcommand{\procargout}{%
