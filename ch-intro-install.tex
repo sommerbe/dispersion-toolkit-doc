@@ -1,0 +1,13 @@
+
+To simplify working with the dispersion toolkit, the compiled binaries may be installed into a convenient directory. 
+
+\paragraph{Linux Operating Systems: make}
+
+In Linux Operating Systems, the default location depends on the distribution's configuration, which however is usually
+\codeline{/usr/local}
+but not always. Installing into this directory usually requires root access. Installation into the home directory of $\codef{user}$ with
+\codeline{cmake .. -DCMAKE\_INSTALL\_PREFIX=/home/user/bin}
+accomplishes this goal, while being in the build directory as discussed in the previous section on building this software. Installation with
+\codeline{make install}
+can be invoked after a successfull build.
+
