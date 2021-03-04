@@ -1,0 +1,132 @@
+%
+Besides algorithmic vigour, exhaustively iterating through all locally greatest empty rectangles solves $\fndisp(\fnP_i, \Rrect, \muarea)$ from (\mref{eq:disp-range}) as well. The idea behind this approach is to provide an algorithmic solution being easy to implement to be consulted as a ground truth. Developing sophisticated algorithms require trusted references, helping to find implementation mistakes. Besides, such an exhaustive search allows to cover detailed statistics, for instance concerning the number of rectangles, interiour rectangles, exteriour rectangles, rectangles whose area matches a specified range.
+
+For $\fnP_i \subset \setR^2$, the algorithm considers all rectangles $\bm r \in \Rrect$ either being bounded by some $\bm p_i$, or being bounded by the problem domain. Therefore, $\bm r$ are not on the torus. This step already involves worst case $\bigO(n^4)$ in time, due to combinatorially considering $4$ sides of $\bm r$. However, the implementation facilitates faster computations through ensuring boundary conditions imposed by $\bm r$. Namely, coordinates of $\bm r$ along dimension $d$ are to be ordered ascendingly.
+
+Once an empty rectangle is determined, the final innermost loop conditions $\muarea(\bm r) \geq 0$. Here $\muarea$ measures the rectangle's area as a multiplication of its side lengths. This loop increases the computational amount to worst case $\bigO(n^4)$ in time, while any case $\bigO(n)$ in space remains.
+
+All $\bm r \in \Rrect$ satisfy these properties, to be locally greatest empty rectangles within the problem domain. The latter is defined by $\fnP_i$ itself. This problem domain may vary between $\fnP_i$.
+
+During this exhaustive search, additional information may be gathered. In summary, this procedure may compute
+\begin{enumerate}
+  \item dispersion,
+  \item cardinality of $\Rrect$ (all $\bm r$ including interiour as well as exteriour $\bm r$ of any $\muarea > 0$),
+  \item coordinates of $\bm r$ (all $\bm r$, interiour $\bm r$, the first globally greatest $\bm r$), and
+  \item area of $\bm r$.
+\end{enumerate}
+
+In case of requesting coordinates of $\bm r$, only those $\bm r$ are returned whose area matches
+\begin{align}\mlabel{eq:disp-rect-areacond}
+  \muarea(\bm r) \in [a_0, a_1),
+\end{align}
+while by default $[a_0, a_1) = [-\infty, \infty)$.
+
+For relatively small 
+\begin{align*}
+  n \lessapprox \num{1e2} \rightarrow \num{1e3},
+\end{align*}
+this implementation remains computationally feasible.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{disp-combinatorial}{[--i=FILE] [--o=FILE]\newline
+  [--disp] [--ndisp] [--count-boxes]\newline
+  [--boxes] [--interior-boxes] [--greatest-box]\newline
+  [--box-area] [--box-area-min=$a_0$] [--box-area-max=$a_1$]\newline
+  [--no-box-coordinates]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--disp}
+  Computes $\fndisp(\fnP_i, \Rrect, \muarea)$.
+\end{procarg}
+
+\begin{procarg}{--ndisp}
+  Computes $\abs{\fnP_i} \fndisp(\fnP_i, \Rrect, \muarea)$, with point set cardinality $\abs{\fnP_i}$.
+\end{procarg}
+
+\begin{procarg}{--count-boxes}
+  Counts all $\bm r \in \fnP_i$, including interiour and exteriour $\bm r$, and whose $\muarea(\bm r) \geq 0$.
+\end{procarg}
+
+\begin{procarg}{--boxes}
+  Streams all $\bm r \in \fnP_i$, including interiour and exteriour ones, to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+\end{procarg}
+
+\begin{procarg}{--interior-boxes}
+  Streams only interiour $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+\end{procarg}
+
+\begin{procarg}{--greatest-box}
+  Streams only the first globally greatest $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+\end{procarg}
+
+\begin{procarg}{--box-area}
+  Streams the tuple $\mleft(\bm r, \muarea(\bm r)\mright)$ of selected $\bm r$ to the specified output. These $\bm r$ could be all rectangles of $\Rrect$, or only interiour ones, or only the first globally greatest one. This option appends $\muarea(\bm r)$ to the list of coordinates of $\bm r$, amounting to a $d=5$ dimensional point. However, in case of hiding coordinates of $\bm r$, this $\muarea(\bm r)$ remains the only coordinate to stream. Each such tuple is situated on a distinct line.
+\end{procarg}
+
+\begin{procarg}{--box-area-min=$a_0$}
+  Sets the interval $[a_0, a_1)$ to select $\bm r$ according to (\mref{eq:disp-rect-areacond}).
+\end{procarg}
+
+\begin{procarg}{--box-area-max=$a_1$}
+  Sets the interval $[a_0, a_1)$ to select $\bm r$ according to (\mref{eq:disp-rect-areacond}).
+\end{procarg}
+
+\begin{procarg}{--no-box-coordinates}
+  Hides coordinates of selected $\bm r$ in case they are streamed to the specified output.
+\end{procarg}
+
+\procargsilent
+
+
+\paragraph{Return format}
+
+The coordinates of $\bm r \in \setR^4$ are formatted as the tuple
+\begin{align*}
+  (r_{0,0}, r_{0,1}, r_{1,0}, r_{1,1})
+\end{align*}
+with $r_{v,d}$ in dimension $d$ and coordinate value being smallest ($v=0$) and greatest ($v=1$) within $\bm r$. Each $r_{v,d}$ are separated by a delimiter, either determined from the given point set, for consistency, or being explicitly specified as a command line argument.
+
+The selected $\bm r$ to be streamed are formatted each on a distinct line of the output as
+\begin{align*}
+  &\bm r_0\codef{EOL} \\
+  &\bm r_1\codef{EOL} \\
+  &\vdots \\
+  &\bm r_k\codef{EOL} \\
+  &\codef{\formateos}
+\end{align*}
+with end of line delimiter $\codef{EOL}$. In case of additionally streaming areas, $\bm r_i$ are appended by $\muarea(\bm r_i)$ in their $d=5$ dimension. In case of only streaming areas, the formatted output becomes
+\begin{align*}
+  &\muarea(\bm r_0)\codef{EOL} \\
+  &\muarea(\bm r_1)\codef{EOL} \\
+  &\vdots \\
+  &\muarea(\bm r_k)\codef{EOL} \\
+  &\codef{\formateos}
+\end{align*}
+which is a $d=1$ dimensional point set.
+
+This pattern is repeated for each $\fnP_i$ of the input stream.
+
+In case of measuring dispersion, or the number of boxes, these numbers are formatted as the point
+\begin{align*}
+  &\mleft( \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_i)} \mright)
+\end{align*}
+for $i \in [0,\ptseqsize)$, creating a point set for $i$ in ascending order. Here, only those coordinates are present if explicitly selected as command line arguments. So the format
+\begin{align*}
+  &\mleft( \fndisp(\fnP_0, \Rrect, \muarea),\quad \abs{\fnP_0} \fndisp(\fnP_0, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_0)} \mright)\codef{EOL} \\
+  &\mleft( \fndisp(\fnP_1, \Rrect, \muarea),\quad \abs{\fnP_1} \fndisp(\fnP_1, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_1)} \mright)\codef{EOL} \\
+  &\vdots \\
+  &\mleft( \fndisp(\fnP_\ptseqsize, \Rrect, \muarea),\quad \abs{\fnP_\ptseqsize} \fndisp(\fnP_\ptseqsize, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_\ptseqsize)} \mright)\codef{EOL} \\
+  &\codef{\formateos}
+\end{align*}
+could result.
+
+
