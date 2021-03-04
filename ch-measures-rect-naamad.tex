@@ -43,18 +43,18 @@ while being limited to $\fnP_i \subset \setR^2$.
 
 \paragraph{Return format}
 
-This procedure returns a point set of cardinality $\ptseqsize$ with dimension $0 < d \leq 3$ while each axis represents a computed measure,
-
-\begin{tabular}{cccc}
-  $\fnP_i$ & \codef{--disp} & \codef{--ndisp} & \codef{--count-boxes} \\
-  \toprule
-  $0$ & \cdot & \cdot & \cdot \\
-  $1$ & \cdot & \cdot & \cdot \\
-  $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
-  $\ptseqsize-1$ & \cdot & \cdot & \cdot, \\
-  \bottomrule  
-\end{tabular}
-
-being in this column-wise order, and while some columns are optional but not all. 
+With dimension $0 < d \leq 3$, a tuple of $d$ measurements
+\begin{align*}
+  t_i \coloneqq \mleft( \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_i)} \mright)
+\end{align*}
+becomes a point of the $d$ dimensional point set
+\begin{align*}
+  &t_0\formateol\\
+  &t_1\formateol\\
+  &\vdots \\
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
+\end{align*}
+with cardinality $\ptseqsize$. Some columns are optional, but not all. 
 
 
