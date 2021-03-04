@@ -1,0 +1,80 @@
+%
+\cto[section 5.1]{dumitrescu2017slab} reduce the $d=3$ dimensional dispersion problem
+\begin{align*}
+  \fndisp(\fnP_i, \Rbox, \muarea),\ \fnP_i \in \setR^3,
+\end{align*}
+according to (\mref{eq:disp-range}) to the $d=2$ dimensional counterpart. 
+
+For $n$ points $\bm p_i \in \fnP_i$, their idea is to partition the problem domain $[0,1]^3$ into 
+\begin{align*}
+  \bigO(\epsilon^{-1} n^{\frac{1}{3}})
+\end{align*}
+axis-parallel planes where $\epsilon$ inversely stears the level of quantisation. This $\epsilon$ is therefore proportional to the distance between planes. In finite computing, this reduction remains approximate. For
+\begin{align*}
+  \epsilon \rightarrow 0,
+\end{align*}
+this approximate reduction becomes exact.
+
+Each pair of two planes $p_0$ and $p_1$ represents a slab. All points within a slab are projected onto a two dimensional parallel plane where the dispersion problem is solved exactly. For this sub-problem, they employed the algorithm suggested by \ct{aggarwal1987}. Having found a greatest empty rectangle 
+\begin{align*}
+  \bm r \in \setR^2,
+\end{align*}
+they expand $\bm r$ into the third dimension by aligning the resulting box
+\begin{align*}
+  \bm b \in \setR^3
+\end{align*}
+to both planes $p_0$ and $p_1$. This creates the box $\bm b$ with area
+\begin{align*}
+  \muarea(\bm b) = \muarea(\bm r) \abs{p_1 - p_0}.
+\end{align*}
+The maximum of $\muarea(\bm b)$ among all slabs finally approximates dispersion in $d=3$ dimensions.
+
+\paragraph{Implementation differences}
+
+Instead of employing the exact algorithm suggested by \ct{aggarwal1987}, this implementation uses the simpler yet exact algorithm due to \cto[algorithm MERAlg1]{naamad1984merp}. While the results are identical, the computational performance is slightly decreased. At the time of implementing this procedure, the additional effort involved by their complex algorithm was not yet worth the effort. In case this situation changes, a computational improvement may be provided.
+
+In total, the computational complexity amounts to $\bigO(\epsilon^{-2} n^{-2/3} n^2)$ in time, and $\bigO(n)$ in space.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{disp-dumitrescu2017}{[--i=FILE] [--o=FILE]\newline
+  [--disp] [--ndisp] [--count-boxes]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\begin{procarg}{--disp}
+  Computes $\fndisp(\fnP_i, \Rbox, \muarea)$.
+\end{procarg}
+
+\begin{procarg}{--ndisp}
+  Computes $\abs{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea)$, with point set cardinality $\abs{\fnP_i}$.
+\end{procarg}
+
+\begin{procarg}{--count-boxes}
+  Counts all empty \enquote{restricted rectangles} (RRs) of $\fnP_i$, considered as RRs in the publication \cp{naamad1984merp}.
+\end{procarg}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\procargsilent
+
+\paragraph{Return format}
+
+With dimension $0 < d \leq 3$, a tuple of $d$ measurements
+\begin{align*}
+  t_i \coloneqq \mleft( \fndisp(\fnP_i, \Rbox, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea),\quad \abs{\Rbox(\fnP_i)} \mright)
+\end{align*}
+becomes a point of the $d$ dimensional point set
+\begin{align*}
+  &t_0\formateol\\
+  &t_1\formateol\\
+  &\vdots \\
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
+\end{align*}
+with cardinality $\ptseqsize$.
