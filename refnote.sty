@@ -37,7 +37,8 @@
   \newcommand{\cp}[1]{\refnotecoltext{\parencite{#1}}\refnoteaside{\refnoteref{#1}}}
   \newcommand{\cpo}[2][]{\refnotecoltext{\parencite[#1]{#2}}\refnoteaside{\refnoteref{#2}}}
   \newcommand{\ct}[1]{\refnotecoltext{\textcite{#1}}\refnoteaside{\refnoteref{#1}}}
-  \newcommand{\cto}[2][]{\refnotecoltext{\textcite[#1]{#2}}\refnoteaside{\refnoteref{#2}}}
+  \newcommand{\cto}[2][]{\refnotecoltext{\textcite[#1]{#2}}\refnoteaside{\refnoteref{#2}}}  
+  \newcommand{\ctc}[1]{\refnotecoltext{\citeauthor*{#1} (\citeyear{#1})}\refnoteaside{\refnoteref{#1}}}
   \newcommand{\mref}[1]{\ref{#1}\refnoteaside{\refnoteref{#1}}}
   \newcommand{\mlabel}[1]{\label{#1}\refnoteaside{\refnotelabel{#1}}}
 \else
@@ -45,6 +46,7 @@
   \newcommand{\cp}[1]{\parencite{#1}}
   \newcommand{\cpo}[2][]{\parencite[#1]{#2}}
   \newcommand{\ct}[1]{\textcite{#1}}
+  \newcommand{\ctc}[1]{\citeauthor*{#1} (\citeyear{#1})}
   \newcommand{\cto}[2][]{\textcite[#1]{#2}}
   \newcommand{\mref}[1]{\ref{#1}}
   \newcommand{\mlabel}[1]{\label{#1}}
