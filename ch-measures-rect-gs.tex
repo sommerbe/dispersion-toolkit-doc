@@ -1,0 +1,77 @@
+%
+This algorithm is similar to \ct{naamad1984merp}, except that it allows point sets $\fnP_i \subset \setR^{\sdim}$ in $\sdim$ dimensions to compute their dispersion $\fndisp(\fnP_i, \Rbox, \muarea)$ whose axis aligned boxes $\bm b \in \Rbox$ are bounded by the finite problem domain $\fdom$. As another difference, this algorithm manages with one step, not having to account for those $\bm b$ bounded by $\fdom$ on both one side and two sides. Besides, other subtle differences exist. But the idea of growing $\bm b$ along some $\sdim$ while shrinking it along some other $\sdim$ is shared with their contribution. This measure is not on the torus.
+
+Before computing $\bm b$, and therefore before computing $\fndisp(\fnP_i, \Rbox, \muarea)$, the algorithm sorts all $n$ points $\bm p \in \fnP_i$ along each $\sdim$. Maintaining this order requires a computational complexity of $\bigO(n\log(n)\sdim)$ in time and $\bigO(n \sdim)$ in space. This concludes the preprocessing.
+
+Instead of iterating through candidate boxes $\bm b$, this algorithm iterates through $\bm p$ to compute local dispersion
+\begin{align*}
+  \fndisp(\bm p, \fnP_i, \Rbox, \muarea) \coloneqq &\fndisp(\fnP_i, \widehat\fnR_{\text{box}}, \muarea) \\
+  &\quad \forall \bm b \in \widehat\fnR_{\text{box}} \subset \Rbox\ \wedge\ \bm p \in \partial\bm b\ \wedge\ \bm p \in \fnP_i.
+\end{align*}
+Iterating $\forall \bm p$ while merging with $\max$ norm retrieves global dispersion,
+\begin{align*}
+  \fndisp(\fnP_i, \Rbox, \muarea) \coloneqq \max_{\bm p \in \fnP_i} \fndisp(\bm p, \fnP_i, \Rbox, \muarea).
+\end{align*}
+
+Local dispersion is further partitioned into sided local dispersion
+\begin{align*}
+  \fndisp(\bm e, \bm p, \fnP_i, \Rbox, \muarea) \coloneqq &\fndisp(\fnP_i, \widehat\fnR_{\text{box}}, \muarea) \\
+  &\quad \forall \bm b \in \widehat\fnR_{\text{box}} \subset \Rbox\ \wedge\ \bm p \in \partial\bm b\ \wedge\ \bm p \in \fnP_i \\
+  &\quad \wedge\ \bm p \in \langle \partial \bm b, \bm e \rangle_{\bm p}
+\end{align*}
+with the projection operator $\langle \partial \bm b, \bm e \rangle_{\bm p}$ to  project $\partial\bm b$ onto the signed axis $\bm e$ which origins at $\bm p$ while remaining within $\sdim$ dimensions for $\in \langle \cdot,\cdot\rangle_{\bm p}$ to work. This measure relates to local dispersion with
+\begin{align*}
+  \fndisp(\bm p, \fnP_i, \Rbox, \muarea) = \max_{\bm e = \pm \widehat{\bm e}_k, k \in [0,\sdim)} \fndisp(\bm e, {\bm p}, \fnP_i, \Rbox, \muarea),
+\end{align*}
+and with unit vector $\widehat{\bm e}_k$ in dimension $k$.
+
+For computing sided local dispersion, the idea of growing and shrinking is employed. Namely, for dimension $k$ corresponding to $\widehat{\bm e}_k$, and initially zero in $k$ box $\bm b$ grows in $k$ with each next point $\bm p_{i+1}$ ordered in $k$ ascendingly. At the same time, this initial $\bm b$ having maximum extent not in $k$ shrinks not in $k$ with each $\bm p_{i+1}$ maximally with $\min$ between the coordinates of $\bm p_{i+1}$ and of $\bm b$ along axis not $k$ for $\bm b$ to remain  locally greatest empty.
+
+This algorithm assumes the coordinates $\forall \bm p$ to be unique in value.
+
+The computational complexity becomes worst case $\bigO(n^2 \sdim)$ in time and any case $\bigO(n \sdim)$ in space.
+
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{disp-gs}{[--i=FILE] [--o=FILE]\newline
+  [--disp] [--ndisp] [--count-boxes]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\begin{procarg}{--disp}
+  Computes $\fndisp(\fnP_i, \Rbox, \muarea)$.
+\end{procarg}
+
+\begin{procarg}{--ndisp}
+  Computes $\abs{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea)$, with point set cardinality $\abs{\fnP_i}$.
+\end{procarg}
+
+\begin{procarg}{--count-boxes}
+  Counts all locally greatest empty $\bm b$ considered during the computation of sided local dispersion.
+\end{procarg}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\procargsilent
+
+\paragraph{Return format}
+
+With dimension $0 < d \leq 3$, a tuple of $d$ measurements
+\begin{align*}
+  t_i \coloneqq \mleft( \fndisp(\fnP_i, \Rbox, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea),\quad \abs{\Rbox(\fnP_i)} \mright)
+\end{align*}
+becomes a point of the $d$ dimensional point set
+\begin{align*}
+  &t_0\formateol\\
+  &t_1\formateol\\
+  &\vdots \\
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
+\end{align*}
+with cardinality $\ptseqsize$.
