@@ -7,7 +7,11 @@ Second, all candidate interiour empty rectangles are considered. To this end, th
 
 Third, all exteriour empty rectangles matching the upper domain boundary along $d=1$ are considered. These are bounded by $p_{i,1}$ from below, along $d=1$. Computationally, the second step leads to $\bigO(n^2)$ in time and $\bigO(n)$ in memory. 
 
-This dispersion measure follows (\mref{eq:disp-range}), while being limited to $\fnP_i \subset \setR^2$.
+This dispersion measure follows (\mref{eq:disp-range}) with
+\begin{align*}
+  \fndisp(\fnP_i, \Rrect, \muarea)
+\end{align*}
+while being limited to $\fnP_i \subset \setR^2$.
 
 \paragraph{Procedure}
 
