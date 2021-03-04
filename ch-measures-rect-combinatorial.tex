@@ -3,9 +3,11 @@ Besides algorithmic vigour, exhaustively iterating through all locally greatest 
 
 For $\fnP_i \subset \setR^2$, the algorithm considers all rectangles $\bm r \in \Rrect$ either being bounded by some $\bm p_i$, or being bounded by the problem domain. Therefore, $\bm r$ are not on the torus. This step already involves worst case $\bigO(n^4)$ in time, due to combinatorially considering $4$ sides of $\bm r$. However, the implementation facilitates faster computations through ensuring boundary conditions imposed by $\bm r$. Namely, coordinates of $\bm r$ along dimension $d$ are to be ordered ascendingly.
 
-Once an empty rectangle is determined, the final innermost loop conditions $\muarea(\bm r) \geq 0$. Here $\muarea$ measures the rectangle's area as a multiplication of its side lengths. This loop increases the computational amount to worst case $\bigO(n^4)$ in time, while any case $\bigO(n)$ in space remains.
+Once a rectangle is determined, the final innermost loop ensures $\bm r$ to be empty, except on its boundaries. This loop increases the computational amount to worst case $\bigO(n^5)$ in time, while any case $\bigO(n)$ in space remains.
 
 All $\bm r \in \Rrect$ satisfy these properties, to be locally greatest empty rectangles within the problem domain. The latter is defined by $\fnP_i$ itself. This problem domain may vary between $\fnP_i$.
+
+Used by dispersion, here, $\muarea(\bm r)$ measures the rectangle's area as a multiplication of its side lengths.
 
 During this exhaustive search, additional information may be gathered. In summary, this procedure may compute
 \begin{enumerate}
