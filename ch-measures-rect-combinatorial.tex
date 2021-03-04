@@ -99,36 +99,34 @@ with $r_{v,d}$ in dimension $d$ and coordinate value being smallest ($v=0$) and 
 
 The selected $\bm r$ to be streamed are formatted each on a distinct line of the output as
 \begin{align*}
-  &\bm r_0\codef{EOL} \\
-  &\bm r_1\codef{EOL} \\
+  &\bm r_0\formateol \\
+  &\bm r_1\formateol \\
   &\vdots \\
-  &\bm r_k\codef{EOL} \\
-  &\codef{\formateos}
+  &\bm r_k\formateol \\
+  &\formateos\formateol
 \end{align*}
-with end of line delimiter $\codef{EOL}$. In case of additionally streaming areas, $\bm r_i$ are appended by $\muarea(\bm r_i)$ in their $d=5$ dimension. In case of only streaming areas, the formatted output becomes
+with end of line delimiter $\formateol$. In case of additionally streaming areas, $\bm r_i$ are appended by $\muarea(\bm r_i)$ in their $d=5$ dimension. In case of only streaming areas, the formatted output becomes
 \begin{align*}
-  &\muarea(\bm r_0)\codef{EOL} \\
-  &\muarea(\bm r_1)\codef{EOL} \\
+  &\muarea(\bm r_0)\formateol \\
+  &\muarea(\bm r_1)\formateol \\
   &\vdots \\
-  &\muarea(\bm r_k)\codef{EOL} \\
-  &\codef{\formateos}
+  &\muarea(\bm r_k)\formateol \\
+  &\formateos\formateol
 \end{align*}
-which is a $d=1$ dimensional point set.
+which is a $d=1$ dimensional point set. This pattern is repeated for each $\fnP_i$ of the input stream.
 
-This pattern is repeated for each $\fnP_i$ of the input stream.
-
-In case of measuring dispersion, or the number of boxes, these numbers are formatted as the point
+In case of measuring dispersion, or the number of boxes these numbers are formatted as the point
 \begin{align*}
-  &\mleft( \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_i)} \mright)
+  t_i &= \mleft( \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\fnP_i} \fndisp(\fnP_i, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_i)} \mright)
 \end{align*}
 for $i \in [0,\ptseqsize)$, creating a point set for $i$ in ascending order. Here, only those coordinates are present if explicitly selected as command line arguments. So the format
 \begin{align*}
-  &\mleft( \fndisp(\fnP_0, \Rrect, \muarea),\quad \abs{\fnP_0} \fndisp(\fnP_0, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_0)} \mright)\codef{EOL} \\
-  &\mleft( \fndisp(\fnP_1, \Rrect, \muarea),\quad \abs{\fnP_1} \fndisp(\fnP_1, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_1)} \mright)\codef{EOL} \\
+  &t_0\formateol\\
+  &t_1\formateol\\
   &\vdots \\
-  &\mleft( \fndisp(\fnP_\ptseqsize, \Rrect, \muarea),\quad \abs{\fnP_\ptseqsize} \fndisp(\fnP_\ptseqsize, \Rrect, \muarea),\quad \abs{\Rrect(\fnP_\ptseqsize)} \mright)\codef{EOL} \\
-  &\codef{\formateos}
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
 \end{align*}
-could result.
+results.
 
 
