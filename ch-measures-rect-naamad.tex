@@ -1,9 +1,9 @@
 
 \cto[algorithm MERAlg1]{naamad1984merp} essentially proposed a linear sweeping algorithm, both without hierarchies and without complex geometric reasoning. The idea is to having to consider only those locally greatest empty rectangles $\bm r \in \Rrect$ which could actually contribute to the globally greatest one. 
 
-The algorithm sweeps in three steps. First, all exteriour empty rectangles are checked maximally spanning along $d=1$ within the domain boundary. This step requires a sorting of points $\bm p_i$ along $d=0$ to ensure the emptiness condition while keeping computational performance in mind.
+The algorithm sweeps in three steps. First, all exteriour empty rectangles are checked maximally spanning along $d=1$ within the domain boundary. This step requires a sorting of $n$ points $\bm p_i \in \fnP$ along $d=0$ to ensure the emptiness condition while keeping computational performance in mind.
 
-Second, all candidate interiour empty rectangles are considered. To this end, the algorithm starts with an empty rectangle $\bm r$ whose extent is maximal along the $d=0$ axis domain boundary, and whose extent is zero along $d=1$, for each point $\bm p_i \in \fnP$. By iterating through all points $\bm p_j$ with $p_{j,1} < p_{j,1}$, their coordinates $p_{j,0}$ along $d=0$ shrink $\bm r$, while $\bm r$ grows along $d=1$ to be bounded by $p_{j,1}$ from below. 
+Second, all candidate interiour empty rectangles are considered. To this end, the algorithm starts with an empty rectangle $\bm r$ whose extent is maximal along the $d=0$ axis domain boundary, and whose extent is zero along $d=1$, for each point $\bm p_i$. By iterating through all points $\bm p_j$ with $p_{j,1} < p_{j,1}$, their coordinates $p_{j,0}$ along $d=0$ shrink $\bm r$, while $\bm r$ grows along $d=1$ to be bounded by $p_{j,1}$ from below. 
 
 Third, all exteriour empty rectangles matching the upper domain boundary along $d=1$ are considered. These are bounded by $p_{i,1}$ from below, along $d=1$. Computationally, the second step leads to $\bigO(n^2)$ in time and $\bigO(n)$ in memory. 
 
@@ -35,7 +35,7 @@ while being limited to $\fnP_i \subset \setR^2$.
   Counts all empty \enquote{restricted rectangles} (RRs) of $\fnP_i$, considered as RRs in the publication \cp{naamad1984merp}.
 \end{procarg}
 
-\procarginseq{n}
+\procarginseq{\ptseqsize}
 
 \procargout
 
@@ -51,7 +51,7 @@ This procedure returns a point set of cardinality $n$ with dimension $0 < d \leq
   $0$ & \cdot & \cdot & \cdot \\
   $1$ & \cdot & \cdot & \cdot \\
   $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
-  $n-1$ & \cdot & \cdot & \cdot, \\
+  $\ptseqsize-1$ & \cdot & \cdot & \cdot, \\
   \bottomrule  
 \end{tabular}
 
