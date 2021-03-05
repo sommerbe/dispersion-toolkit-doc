@@ -1,4 +1,5 @@
 %
+\label{sec:disp-gs}
 This algorithm is similar to \ct{naamad1984merp}, except that it allows point sets $\fnP_i \subset \setR^{\sdim}$ in $\sdim$ dimensions to compute their dispersion $\fndisp(\fnP_i, \Rbox, \muarea)$ whose axis aligned boxes $\bm b \in \Rbox$ are bounded by the finite problem domain $\fdom$. As another difference, this algorithm manages with one step, not having to account for those $\bm b$ bounded by $\fdom$ on both one side and two sides. Besides, other subtle differences exist. But the idea of growing $\bm b$ along some $\sdim$ while shrinking it along some other $\sdim$ is shared with their contribution. This measure is not on the torus.
 
 Before computing $\bm b$, and therefore before computing $\fndisp(\fnP_i, \Rbox, \muarea)$, the algorithm sorts all $n$ points $\bm p \in \fnP_i$ along each $\sdim$. Maintaining this order requires a computational complexity of $\bigO(n\log(n)\sdim)$ in time and $\bigO(n \sdim)$ in space. This concludes the preprocessing.

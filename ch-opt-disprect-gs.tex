@@ -1,0 +1,115 @@
+%
+The algorithm is based on a $\sdim$ dimensional variant of the high dimensional grow and shrink approach described in section \mref{sec:disp-gs}. The important quantity for this optimisation approach is the, therein defined, sided local dispersion 
+\begin{align*}
+  \fndisp(\bm e, \bm p, \fnP_i, \Rbox, \muarea)
+\end{align*}
+because the gradient ascent inspects this quantity $\forall \bm p \in \fnP_i$ to guide the optimisation.
+
+To begin with, the difference of sided local dispersion
+\begin{align*}
+  g(\bm e, \bm p, \fnP_i, \Rbox, \muarea) \coloneqq &\fndisp(+\bm e, \bm p, \fnP_i, \Rbox, \muarea) \\
+  &- \fndisp(-\bm e, \bm p, \fnP_i, \Rbox, \muarea).
+\end{align*}
+
+This definition facilitates the formal computation of the local gradient
+\begin{align*}
+  \nabla\fndisp(\bm p, \fnP_i, \Rbox, \muarea) \in \setR^2.
+\end{align*}
+Essentially, the gradient shall be the maximum difference between adverse sided local dispersions, the latter due to $\pm \bm e$. First, the signed axis
+\begin{align*}
+  \widehat{\bm e} \coloneqq \argmax_{\bm e} g(\bm e, \bm p, \fnP_i, \Rbox, \muarea)
+\end{align*}
+defines the direction of the gradient. With its magnitude being
+\begin{align*}
+  g(\bm e, \bm p, \fnP_i, \Rbox, \muarea),
+\end{align*}
+the gradient 
+\begin{align*}
+  \nabla\fndisp(\bm p, \fnP_i, \Rbox, \muarea) \coloneqq g(\bm e, \bm p, \fnP_i, \Rbox, \muarea)\ \widehat{\bm e}.
+\end{align*}
+
+The optimisation procedure moves $\bm p^k$, with $k \rightarrow k+1$ iteratively, to
+\begin{align*}
+  \bm p^{k+1} = \bm p^k + t \nabla\fndisp(\bm p^k, \fnP_i, \Rbox, \muarea), \forall \bm p^k \in \fnP_i^k, \forall k,
+\end{align*}
+whereas the iteration step size $t > 0$ needs to be chosen carefully, usually below an empirically varying small threshold, for this sequence to remain numerically stable. Initially,
+\begin{align*}
+  \bm p^0 = \bm p.
+\end{align*}
+This sequence of $k$ terminates as soon as
+\begin{align*}
+  \max_{\bm p \in \fnP_i} \norm{\nabla\fndisp(\bm p^k, \fnP_i, \Rbox, \muarea)}_2 < \tau.
+\end{align*}
+Here, $\tau$ acts a global termination threshold. Additionally, this sequence continues as long as
+\begin{align*}
+  k \leq \widehat k.
+\end{align*}
+
+Computationally, this algorithm leads to a complexity of $\bigO(n^2 \sdim)$ in time and $\bigO(n \sdim)$ in space. The advantage of using local dispersion is a smaller complexity by a factor of $\bigO(n)$ in time, because computing both gradient and global dispersion is carried out together, within one step. As discussed in section \mref{sec:disp-gs}, global dispersion is obtained through $\max$ of local dispersion measures $\forall \bm p^k$.
+
+Another advantage of sharing local dispersion with the algorithm described in section \mref{sec:disp-gs} is the mutual support for $\sdim$ dimensional $\fnP_i$. This algorithm may be employed to modify $\fnP_i$ in trying to reduce its dispersion measure. However, such iterations may increase dispersion, inbetween or finally.
+
+A possible future work may reside in restricting the movements of $\bm p^k$, for instance such that empty boxes are neither created nor destroyed during $k \rightarrow k+1$. Its effect requires further investigation.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{mindisp-gs}{[--i=FILE] [--o=FILE]\newline
+  [(--iteration-limit|--c)=$\widehat k$] [(--tau|--t)=$\tau$]\newline
+  [(--stepsize|--dt)=$t$]\newline
+  [--no-pointset] [--compute-iterations]\newline
+  [--pointset-sequence]\newline
+  [--silent] [--delimiter=$c$]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--iteration-limit=$\widehat k$ | --c=$\widehat k$}
+  Defines the definite upper bound on the size $\widehat k$ of the iterative sequence on $k$.
+\end{procarg}
+
+\begin{procarg}{--tau=$\tau$ | --t=$\tau$}
+  Defines the dynamic termination threshold $\tau$ below which the greatest gradient magnitude have to fall for the sequence on $k$ to terminate.
+\end{procarg}
+
+\begin{procarg}{--stepsize=$t$ | --dt=$t$}
+  Defines the speed at which the points $\bm p^k$ are move from $k \rightarrow k+1$ as a multiplicative factor applied to the gradient.
+\end{procarg}
+
+\begin{procarg}{--no-pointset}
+  Prevents the streaming of the final point set $\fnP_i^{\max(k)}$ to the specified output. This option is only useful (and valid) in combination with \codef{--compute-iterations}.
+\end{procarg}
+
+\begin{procarg}{--compute-iterations}
+  Streams the number of actual iterations, $\max(k) \forall i$, to the specified output. This number is returned before the optimised point set.
+\end{procarg}
+
+\begin{procarg}{--pointset-sequence}
+  Streams each point set $\fnP_i^k$ to the specified output. This option becomes particularly useful to observe modifications $k \rightarrow k+1$ on $\bm p^k$.
+\end{procarg}
+
+\procargdelimiter
+
+\procargsilent
+
+\paragraph{Return format}
+
+By default, this procedure returns the optimised point set $\fnP_i^{\max(k)}$. Depending on given options, each intermediate result $\fnP_i^k$ may be streamed to the output as well. Whether the final point set is streamed in this case depends on the user's choice. 
+
+Besides, another optional output is
+\begin{align*}
+  t_i = \max(k)\ \text{for}\ \fnP_i,
+\end{align*}
+formatted as
+\begin{align*}
+  &t_0\formateol\\
+  &t_1\formateol\\
+  &\vdots \\
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
+\end{align*}
+in literal encoding.
