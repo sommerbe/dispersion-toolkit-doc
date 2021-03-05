@@ -1,2 +1,84 @@
 %
+For $n$ points $\bm p_i \in \fnP_i$, the algorithm initially precomputes
+\begin{align*}
+  d(\bm p_i, \bm p_j)\ \forall \bm p_i, \bm p_j \in \fnP_i
+\end{align*}
+being stored in an indexed array.
 
+Next, all $p$-element combinations of $\mathcal U$ are computed using a recursion. To this end, the algorithm determines the first index $i_0$ of $\bm p_{i_0} \in \mathcal U$ with the outer loop $i_0 = 0 \rightarrow n-1$. The subsequently nested loop $i_1 = i_0 \rightarrow n-1$ determines the second index $i_1$. This recursion continues until $i_{p-1}$. So,
+\begin{align*}
+  &i_0 = 0 \rightarrow n-1 \\
+  &\quad i_1 = i_1+1 \rightarrow n-1 \\
+  &\qquad\quad \vdots \\
+  &\qquad\quad i_{p-1} = i_{p-2}+1 \rightarrow n-1.
+\end{align*}
+This scheme selects the $p$-element combination
+\begin{align*}
+  u \coloneqq (i_0, i_1, ..., i_{p-1}),\quad [i_a = i_b] = [a = b]\ \forall a,b
+\end{align*}
+where $[\cdot = \cdot]$ is the Iverson bracket mapping a boolean operation to binary integers. Therefore,
+\begin{align*}
+  \mathcal U = \{\bm p_a \}_{a \in u}.
+%  \mathcal U = \{\bm p_{i_0}, \bm p_{i_1}, ..., \bm p_{i_{p-1}} \}.
+\end{align*}
+
+The minimal mutual distances are determined within two nested loops
+\begin{align*}
+  &a = 0 \rightarrow p-1 \\
+  &\quad b = a+1 \rightarrow p-1 
+\end{align*}
+using
+\begin{align*}
+  \min_{a,b} d(\bm p_{u_a}, \bm p_{u_b}).
+\end{align*}
+Finally,
+\begin{align*}
+  \max_{u} \min_{a,b} d(\bm p_{u_a}, \bm p_{u_b})
+\end{align*}
+concludes the computation. The preprocessing requires a computational complexity of $\bigO(n^2)$ in time as well as in space. Determining $u$ causes the greatest complexity with $\bigO(n^p)$ in time, while $\min_{a,b}$ multiplicatively causes $\bigO(p^2)$. In total, this exhaustive search amounts to a computational complexity of $\bigO(n^p p^2)$ in time and of $\bigO(n^2)$ in space.
+
+Fortunately, this algorithm works for any $d$ dimensional point set $\fnP_i$.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{pdisp-permute}{[--i=FILE] [--o=FILE]\newline
+  --p=$p$\newline
+  [--disp] [--ndisp] [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--disp}
+  Computes $\pdisp(\fnP_i, p)$.
+\end{procarg}
+
+\begin{procarg}{--ndisp}
+  Computes $n \pdisp(\fnP_i, p)$, with point set cardinality $n=\abs{\fnP_i}$.
+\end{procarg}
+
+\begin{procarg}{--p=$p$ | --p $p$}
+  Sets the cardinality of combinations $\mathcal U$, or $u$ in the algorithmic description above. Boundary condition: $1 < p \leq n$.
+\end{procarg}
+
+\procargsilent
+
+\paragraph{Return format}
+
+The measurements
+\begin{align*}
+  t_i &= \mleft( \pdisp(\fnP_i, p),\quad \abs{\fnP_i} \pdisp(\fnP_i, p) \mright)
+\end{align*}
+represent a point of the streamed point set with cardinality $\ptseqsize$. Depending on the arguments given, some elements of $t_i$ may be omitted, but not all. Therefore, the stream 
+\begin{align*}
+  &t_0\formateol\\
+  &t_1\formateol\\
+  &\vdots \\
+  &t_{\ptseqsize-1}\formateol\\
+  &\formateos\formateol
+\end{align*}
+results.

@@ -1,11 +1,11 @@
 %
-An extension of the concept of dispersion is the \enquote{p-dispersion} problem, defined for instance by \cto[section 3]{erkut1990discrmaximin}. The idea is to find a subset of points $\mathcal U \subset \mathcal E$ with maximal smallest pair-wise distance $d(\cdot,\cdot)$,
+An extension of the concept of dispersion is the \enquote{p-dispersion} problem, defined for instance by \cto[section 3]{erkut1990discrmaximin}. The idea is to find a subset of points $\mathcal U \subset \fnP_i$ with maximal smallest pair-wise distance $d(\cdot,\cdot)$,
 \begin{align}\label{eq:pdisp}
-  \pdisp(\mathcal E, p) = \max_{\stackrel{\mathcal U \subseteq \mathcal E}{\abs{\mathcal U} = p}} \quad\min_{\bm x_i, \bm x_j \in \mathcal U, i \neq j} d(\bm x_i, \bm x_j).
+  \pdisp(\fnP_i, p) = \max_{\stackrel{\mathcal U \subseteq \fnP_i}{\abs{\mathcal U} = p}} \quad\min_{\bm p_i, \bm p_j \in \mathcal U, i \neq j} d(\bm p_i, \bm p_j).
 \end{align}
 %\paragraph{Interpreting p-dispersion}
 
-For $p=2$, $\pdisp(\cdot,2)$ equals the greatest distance between two points. Likewise, $\pdisp(\mathcal E, \abs{\mathcal E})$ computes the smallest of such distances. More interestingly, $\pdisp(\mathcal E,3)$ considers all triangles with vertices matching points of $\mathcal E$, folds each triangle to its smallest side, yielding a list line segments out of which the greatest is chosen. In contrast to $\disp(\mathcal E, \mathcal R, \mu)$, no emptiness condition is applied to these triangles. For $p>3$ this situation is analogue.
+For $p=2$, $\pdisp(\cdot,2)$ equals the greatest distance between two points. Likewise, $\pdisp(\fnP_i, \abs{\fnP_i})$ computes the smallest of such distances. More interestingly, $\pdisp(\fnP_i,3)$ considers all triangles with vertices matching points of $\fnP_i$, folds each triangle to its smallest side, yielding a list line segments out of which the greatest is chosen. In contrast to $\disp(\fnP_i, \mathcal R, \mu)$, no emptiness condition is applied to these triangles. For $p>3$ this situation is analogue.
 
 \paragraph{Computational complexity}
 
