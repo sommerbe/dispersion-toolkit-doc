@@ -1,0 +1,12 @@
+%
+An extension of the concept of dispersion is the \enquote{p-dispersion} problem, defined for instance by \cto[section 3]{erkut1990discrmaximin}. The idea is to find a subset of points $\mathcal U \subset \mathcal E$ with maximal smallest pair-wise distance $d(\cdot,\cdot)$,
+\begin{align}\label{eq:pdisp}
+  \pdisp(\mathcal E, p) = \max_{\stackrel{\mathcal U \subseteq \mathcal E}{\abs{\mathcal U} = p}} \quad\min_{\bm x_i, \bm x_j \in \mathcal U, i \neq j} d(\bm x_i, \bm x_j).
+\end{align}
+%\paragraph{Interpreting p-dispersion}
+
+For $p=2$, $\pdisp(\cdot,2)$ equals the greatest distance between two points. Likewise, $\pdisp(\mathcal E, \abs{\mathcal E})$ computes the smallest of such distances. More interestingly, $\pdisp(\mathcal E,3)$ considers all triangles with vertices matching points of $\mathcal E$, folds each triangle to its smallest side, yielding a list line segments out of which the greatest is chosen. In contrast to $\disp(\mathcal E, \mathcal R, \mu)$, no emptiness condition is applied to these triangles. For $p>3$ this situation is analogue.
+
+\paragraph{Computational complexity}
+
+A reduction to the CLIQUE problem was provided by \ct{erkut1990discrmaximin}. The CLIQUE problem itself is \ccNPcomplete, which was shown by \ct{cook1971sat, karp1972cclass}. Nevertheless approximating this problem appears to demand caution, since \ct{feige1991clique} have shown that the existance of a good approximation implies $\mathcal{NP} = \mathcal{P}$ being considered invalid but for which a proof is still pending. Therefore, approximating the p-dispersion problem appears to require care.
