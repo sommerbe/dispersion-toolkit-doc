@@ -1,0 +1,99 @@
+%
+Similar to visualising point set sequences, this procedure draws rectangles usually obtained during measuring dispersion based on rectangular regions.
+
+Here, a rectangle $\bm r$ is represented by a $\sdim=4$ dimensional point $\bm p \in \fnP_i$. The coordinates of $\bm p$, $(p_0, p_1, p_2, p_3)$, correspond to the smallest coordinates $(p_0, p_1)$ of $\bm r$ ordered in dimension index ascendingly, and to the greatest coordinates $(p_2, p_3)$ of $\bm r$ ordered in dimension index ascendingly.
+
+A colour in RGBA representation is a quartuple 
+\begin{align*}
+  c_{\text{rgba}} \coloneqq (c_0, c_1, c_2, c_3), c_i \in [0,1].
+\end{align*}
+The alpha channels is represented by $c_3$. Alternatively, $c_{\text{rgba}}$ may be given in literal form $c_s$, according to the implementation provided by the matplotlib python library.
+
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{vis-rectangles.py}{[--i=FILE] [--pts=FILE]\newline
+  [--domain=$\fdom$] [--gridlines=$a\ b$]\newline
+  [--colour-alpha-edge=$c_3$] [--colour-rgba-edge=$c_{\text{rgba}}$]\newline
+  [--colour-edge=$c_s$]\newline
+  [--colour-alpha-fill=$c_3$] [--colour-rgba-fill=$c_{\text{rgba}}$]\newline
+  [--colour-fill=$c_s$] [--fill=$z$]\newline
+  [--colour-alpha-pts=$c_3$] [--colour-rgba-pts=$c_{\text{rgba}}$]\newline
+  [--colour-pts=$c_s$]
+  [--delay=$t$]\newline
+  [--image-path=$s$] [--image-ppi=$r_{\text{ppi}}$]\newline
+  [--silent]}
+\end{synopsis}
+
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\begin{procarg}{--pts=FILE}
+  Retrieves a point set sequence $\widehat{\fnP}_i$ of size $\ptseqsize$ from \codef{FILE}, with $i \in [0,\ptseqsize)$. Each $\widehat{\fnP}_i$ is drawn on top of the rectangles $\bm r$ within the problem domain.
+\end{procarg}
+
+\begin{procarg}{--domain=$\fdom$}
+  Sets the spatial extent $\fdom$ of the plot. This is a 4 dimensional tuple, with its coordinates having equal ordering as in $c_{\text{rgba}}$ described above.
+\end{procarg}
+
+\begin{procarg}{--gridlines=$a\ b$}
+  Sets the number of axis ticks $a$ (along $\sdim=0$) as well as $b$ (along $\sdim=1$). So $a$ sets the number of vertical lines, while $b$ sets the number of horizontal lines.
+\end{procarg}
+
+\begin{procarg}{--colour-alpha-edge=$c_3$}
+  Sets the alpha channel $c_3$ of the colour $c_{\text{rgba}}$ to be used when drawing the edges of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-rgba-edge=$c_{\text{rgba}}$}
+  Sets the colour $c_{\text{rgba}}$ to be used when drawing the edges of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-edge=$c_s$}
+  Interprets the literal string $c_s$ of a colour as $c_{\text{rgba}}$ to be used when drawing the edges of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-alpha-fill=$c_3$}
+  Sets the alpha channel $c_3$ of the colour $c_{\text{rgba}}$ to be used when drawing the interiour of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-rgba-fill=$c_{\text{rgba}}$}
+  Sets the colour $c_{\text{rgba}}$ to be used when drawing the interiour of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-fill=$c_s$}
+  Interprets the literal string $c_s$ of a colour as $c_{\text{rgba}}$ to be used when drawing the interiour of rectangles.
+\end{procarg}
+
+\begin{procarg}{--colour-alpha-pts=$c_3$}
+  Sets the alpha channel $c_3$ of the colour $c_{\text{rgba}}$ to be used when drawing $\bm p \in \fnP_i$, if $\fnP_i$ have been specified through the command line option.
+\end{procarg}
+
+\begin{procarg}{--colour-rgba-pts=$c_{\text{rgba}}$}
+  Sets the colour $c_{\text{rgba}}$ to be used when drawing $\bm p \in \fnP_i$, if $\fnP_i$ have been specified through the command line option.
+\end{procarg}
+
+\begin{procarg}{--colour-pts=$c_s$}
+  Interprets the literal string $c_s$ of a colour as $c_{\text{rgba}}$ to be used when drawing $\bm p \in \fnP_i$, if $\fnP_i$ have been specified through the command line option.
+\end{procarg}
+
+\begin{procarg}{--delay=$t$}
+  Inserts a temporal delay of $t > 0$ seconds inbetween frames $f_i$ where each $f_i$ corresponds to the drawing $\fnP_i$.
+\end{procarg}
+
+\begin{procarg}{--image-path=$s$}
+  Enables to stream the plotted frames $f_i$ to primary storage with a file name to match the pattern $s$. Here, $s$ is a principal file name containing the character sequence \codef{\{i\}} to be replaced by $i$ of $f_i$. For instance, \codef{seq-\{i\}.png} results to \codef{seq-0.png}, \codef{seq-1.png}, ..., \codef{seq-$\ptseqsize$.png}.
+\end{procarg}
+
+\begin{procarg}{--image-ppi=$r_{\text{ppi}}$}
+  Sets the image resolution $r_{\text{ppi}}$ of the images to be stored, given in the pixel per inch unit, being the default unit of the underlying library used to generating these plots.
+\end{procarg}
+
+\procargsilent
+
+
+\paragraph{Return format}
+
+Nothing useful for further processing, except some output for informational purposes. The optionally generated images are streamed directly to primary storage.
