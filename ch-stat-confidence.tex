@@ -1,0 +1,83 @@
+%
+Given a set of $n$ measurements 
+\begin{align*}
+  \bm p_i \coloneqq \{ p_{i,k} \}_{k \in [0,\sdim)},\ i \in [0,n),
+\end{align*}
+in $\sdim$ dimensions, $\forall \bm p_i \in \fnP_i$, the algorithm sorts the coordinates of $\bm p_i$ along each axis $k$ independently to obtain
+\begin{align*}
+  \widehat{\bm p}_i.
+\end{align*}
+Next, a (normalised) percentile
+\begin{align*}
+  q \in [0, 1],
+\end{align*}
+is mapped into indices
+\begin{align*}
+  i(q) \coloneqq \floor{q (n-1)}.
+\end{align*}
+A confidence interval
+\begin{align*}
+  I(q_s, q_t) \coloneqq [\widehat{\bm p}_{i(q_s)}, \widehat{\bm p}_{i(q_t)}],\ 0 \leq q_s < q_t \leq \num{1e-2},
+\end{align*}
+with percentiles $q_s$ and $q_t$ describes the probability, due to $(q_s, q_t)$, of finding a specific measurement $p_{i,k}$ within the interval $I(q_s, q_t)_k$, independently along each dimension. Convenience leads to working with higher dimensions $\sdim >1$, being made possible due to the independent property of computing $I(q_s, q_t)$ along each $k$.
+
+The arithmetic mean is
+\begin{align}\mlabel{eq:stat-mean}
+  M(\fnP_i) \coloneqq n^{-1} \sum_{i\in[0,n)} \bm p_i,
+\end{align}
+with the sum being dimensionally independent.
+
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{stat-confidence}{[--i=FILE] [--o=FILE]\newline
+  [(--percentiles|--p)=$q_0\ q_1\ ...\ q_t$]\newline
+  [--2sigma] [--iqr] [--iqr-box] [--mean]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{1}
+
+\procargout
+
+\begin{procarg}{--percentiles=$q_0\ q_1\ ...\ q_t$ | --p=$q_0\ q_1\ ...\ q_t$}
+  Defines a list of percentiles $q_j \in (q_0, q_1, ..., q_t)$ to compute $\bm s_j = \widehat{\bm p}_{i(q_j)}\ \forall j \in [0,t]$.
+\end{procarg}
+
+\begin{procarg}{--2sigma}
+  Defines $\bm q = (\num{0.02275}, \num{0.5}, 1 - \num{0.02275})$ and computes $\bm s_j = \widehat{\bm p}_{i(q_j)}\ \forall j \in [0,2]$.
+\end{procarg}
+
+\begin{procarg}{--iqr}
+  Defines $\bm q = (\num{0.25}, {0.5}, 1 - \num{0.25})$ and computes $\bm s_j = \widehat{\bm p}_{i(q_j)}\ \forall j \in [0,2]$. The inter quartile range corresponds to $q_2 - q_0$, and therefore to $S_2 - S_0$.
+\end{procarg}
+
+\begin{procarg}{--iqr-box}
+  Defines $\bm q = (\num{0.25}, {0.5}, 1 - \num{0.25})$ and computes $\bm s_{1+j} = \widehat{\bm p}_{i(q_j)}\ \forall j \in [0,2]$. The inter quartile range, $q_2 - q_0$, is computed according to ${\bar{\bm s}}_{\text{iqr}} = \bm s_2 - \bm s_0$. Using this, the additional statistics to characterise statistical outliers are computed with $\bm s_0 = \bm s_1 - \num{1.5} {\bar{\bm s}}_{\text{iqr}}$ and with $\bm s_4 = \bm s_3 + \num{1.5} {\bar{\bm s}}_{\text{iqr}}$.
+\end{procarg}
+
+\begin{procarg}{--mean}
+  Computes the arithmetic mean $M(\fnP_i)$ according to (\mref{eq:stat-mean}), and therefore $\bm m_{i} = M(\fnP_i)$.
+\end{procarg}
+
+\procargsilent
+
+\paragraph{Return format}
+
+The statistical measurements $\bm s_j$ based on the method of confidence intervals are streamed to the selected output according to
+\begin{align*}
+  &\bm s_0\formateol\\
+  &\bm s_1\formateol\\
+  &\vdots \\
+  &\bm s_j\formateol\\
+  &\formateos\formateol
+\end{align*}
+in literal format, not in binary format, as long as $j \geq 0$, i.e. $\bm q$ is given either explicitly or implicitly. In addition, the measurements concerning the  arithmetic mean, $\bm m_0$, feed the output stream
+\begin{align*}
+  &\bm m_0\\
+  &\formateos\formateol
+\end{align*}
+in literal format.
