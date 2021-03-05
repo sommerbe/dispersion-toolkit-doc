@@ -1,0 +1,38 @@
+%
+This utility visualises a point set sequence $\fnP_i$ in $\sdim=2$ dimensions. The origin of this sequence could be either a point set generator itself, some randomisation of it, or intermediate results obtained during some optimisation procedure, as described in previous chapters.
+
+In particular, this procedure focuses on how $\fnP_i$ change with $i$.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{vis-psspy.py}{[--i=FILE]\newline
+  [--delay=$t$]\newline
+  [--image-path=$s$] [--image-ppi=$r_{\text{ppi}}$]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--delay=$t$}
+  Inserts a temporal delay of $t > 0$ seconds inbetween frames $f_i$ where each $f_i$ corresponds to the drawing $\fnP_i$.
+\end{procarg}
+
+\begin{procarg}{--image-path=$s$}
+  Enables to stream the plotted frames $f_i$ to primary storage with a file name to match the pattern $s$. Here, $s$ is a principal file name containing the character sequence \codef{\{i\}} to be replaced by $i$ of $f_i$. For instance, \codef{seq-\{i\}.png} results to \codef{seq-0.png}, \codef{seq-1.png}, ..., \codef{seq-$\ptseqsize$.png}.
+\end{procarg}
+
+\begin{procarg}{--image-ppi=$r_{\text{ppi}}$}
+  Sets the image resolution $r_{\text{ppi}}$ of the images to be stored, given in the pixel per inch unit, being the default unit of the underlying library used to generating these plots.
+\end{procarg}
+
+\procargsilent
+
+
+\paragraph{Return format}
+
+Nothing useful for further processing, except some output for informational purposes. The optionally generated images are streamed directly to primary storage.
