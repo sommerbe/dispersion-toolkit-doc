@@ -1,0 +1,11 @@
+%
+Incremental software releases are versioned according to the \enquote{Backus–Naur Form of Semantic Versioning 2.0.0}.\footnote{A detailed description of this convention is to be found at the URL \href{https://semver.org/}{https://semver.org/}.} This convention entails each version core to match
+\begin{align}\mlabel{eq:dptk-version-conv}
+  \fttoken{version-major}.\fttoken{version-minor}.\fttoken{version-patch}
+\end{align}
+where
+\begin{description}
+  \item[$\fttoken{version-major}$] reflects a code change breaking backwards compatibility, where
+  \item[$\fttoken{version-minor}$] reflects a code change introducing new features while maintaining backwards compatibility, and where
+  \item[$\fttoken{version-patch}$] reflects a code change containing error fixes only, which therefore maintains backwards compatibility while not introducing any new features.
+\end{description}
