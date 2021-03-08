@@ -1,0 +1,93 @@
+%
+This algorithm reads an externally encoded matrix of $n$ points $\bm p \in \fnP_i$ into the internally employed format of this dispersion toolkit.
+
+A $\sdim$ dimensional point $\bm p$, with coordinates $p_i$, $i \in [0,d)$, shall be externally encoded as
+\begin{align*}
+  F[\bm p] \coloneqq \fttoken{pt-prefix}p_0\fttoken{coord-delimiter}p_1\fttoken{coord-delimiter}...p_{d-1}\fttoken{pt-suffix}
+\end{align*}
+to be used repeatedly within the externally encoded matrix. This matrix shall be formatted as
+\begin{align*}
+  M[\bm p_i \in \fnP] \coloneqq \fttoken{set-prefix}F[\bm p_0]\fttoken{pt-del}F[\bm p_1]\fttoken{pt-del}...F[\bm p_{n-1}]\fttoken{set-suffix}
+\end{align*}
+by an external software generating point sets. In case this software streams a sequence of point sets, $\fnP_i$, $i \in [0,\ptseqsize)$, these $M[\fnP_i]$ are concatenated without additional characters,
+\begin{align*}
+  S[\fnP_i, \ptseqsize] \coloneqq M[\fnP_0]M[\fnP_1]...M[\fnP_{\ptseqsize-1}].
+\end{align*}
+
+The internally, decoded, point set sequence requires a definition of their domain boundary
+\begin{align*}
+  \fdom \coloneqq [a_j, b_j]^{\sdim}_{j \in [0,\sdim)}, a_j \leq b_j.
+\end{align*}
+
+This algorithm reads $S[\fnP_i, \ptseqsize]$.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{read-matrix}{[--i=FILE] [--o=FILE]\newline
+  --domain-boundary=$a_0\ b_0\ a_1\ b_1...\ a_{\sdim-1}\ b_{\sdim-1}$\newline
+  [--point-prefix=$\fttoken{pt-prefix}$] [--point-suffix=$\fttoken{pt-suffix}$]\newline
+  [--coord-delimiter=$\fttoken{coord-delimiter}$]\newline
+  [--point-delimiter=$\fttoken{pt-del}$]\newline
+  [--set-prefix=$\fttoken{set-prefix}$] [--set-suffix=$\fttoken{set-suffix}$]\newline
+  [--mathematica] [--csv]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--point-prefix=$\fttoken{pt-prefix}$}
+  Sets $\fttoken{pt-prefix}$.
+\end{procarg}
+
+\begin{procarg}{--point-suffix=$\fttoken{pt-suffix}$}
+  Sets $\fttoken{pt-suffix}$.
+\end{procarg}
+
+\begin{procarg}{--coord-delimiter=$\fttoken{coord-delimiter}$}
+  Sets $\fttoken{coord-delimiter}$.
+\end{procarg}
+
+\begin{procarg}{--point-delimiter=$\fttoken{pt-del}$}
+  Sets $\fttoken{pt-del}$.
+\end{procarg}
+
+\begin{procarg}{--set-prefix=$\fttoken{set-prefix}$}
+  Sets $\fttoken{set-prefix}$.
+\end{procarg}
+
+\begin{procarg}{--set-suffix=$\fttoken{set-suffix}$}
+  Sets $\fttoken{set-suffix}$.
+\end{procarg}
+
+\begin{procarg}{--mathematica}
+  Sets 
+  \begin{align*}
+    \fttoken{pt-prefix} &\coloneqq \codef{\{} &
+    \fttoken{coord-delimiter} &\coloneqq \codef{,} &
+    \fttoken{pt-suffix} &\coloneqq \codef{\}} \\
+    \fttoken{set-prefix} &\coloneqq \codef{\{} &
+    \fttoken{pt-del} &\coloneqq \codef{,} &
+    \fttoken{set-suffix} &\coloneqq \codef{\}}
+  \end{align*}
+  to be used within $S[\fnP_i, \ptseqsize]$.
+\end{procarg}
+
+\begin{procarg}{--csv}
+  Sets 
+  \begin{align*}
+    \fttoken{pt-prefix} &\coloneqq \codef{} &
+    \fttoken{coord-delimiter} &\coloneqq \codef{\textvisiblespace } &
+    \fttoken{pt-suffix} &\coloneqq \codef{} \\
+    \fttoken{set-prefix} &\coloneqq \codef{} &
+    \fttoken{pt-del} &\coloneqq \formateol &
+    \fttoken{set-suffix} &\coloneqq \codef{}
+  \end{align*}
+  to be used within $S[\fnP_i, \ptseqsize]$.
+\end{procarg}
+
+\procargsilent
