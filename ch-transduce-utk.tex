@@ -1,0 +1,26 @@
+%
+This algorithm transforms the point set format \codef{.dat}, produced by the UTK framework,\footnote{For further details, please consult \href{https://utk-team.github.io/utk}{https://utk-team.github.io/utk}.} into the internal format of a $\sdim$ dimensional point set sequence $\fnP_i$ of this dispersion toolkit.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{read-utk}{[--i=FILE] [--o=FILE]\newline
+  [--delimiter=$\fttoken{delimiter}$]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--delimiter=$\fttoken{delimiter}$}
+  Sets $\fttoken{delimiter}$ being the separating ASCII character between coordinates of a point $\bm p \in \fnP_i$.
+\end{procarg}
+
+\procargsilent
+
+\paragraph{Return format}
+
+This procedure returns a $\sdim$ dimensional point set sequence $\fnP_i$ to be used by procedures within this dispersion toolkit.

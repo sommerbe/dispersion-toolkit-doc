@@ -31,6 +31,7 @@ This algorithm reads $S[\fnP_i, \ptseqsize]$.
   [--point-delimiter=$\fttoken{pt-del}$]\newline
   [--set-prefix=$\fttoken{set-prefix}$] [--set-suffix=$\fttoken{set-suffix}$]\newline
   [--mathematica] [--csv]\newline
+  [--delimiter=$\fttoken{delimiter}$]\newline
   [--silent]}
 \end{synopsis}
 
@@ -90,4 +91,13 @@ This algorithm reads $S[\fnP_i, \ptseqsize]$.
   to be used within $S[\fnP_i, \ptseqsize]$.
 \end{procarg}
 
+\begin{procarg}{--delimiter=$\fttoken{delimiter}$}
+  Sets $\fttoken{delimiter}$ being the separating ASCII character between coordinates of a point $\bm p \in \fnP_i$.
+\end{procarg}
+
+
 \procargsilent
+
+\paragraph{Return format}
+
+This procedure returns a $\sdim$ dimensional point set sequence $\fnP_i$ to be used by procedures within this dispersion toolkit.
