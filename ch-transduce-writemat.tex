@@ -1,0 +1,81 @@
+%
+Writing an $\sdim$ dimensional point set sequence $\fnP_i$ from the internal format, of this dispersion toolkit, to an externally encoded matrix follows the form of (\mref{eq:transduce-rmat-s}). 
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{read-matrix}{[--i=FILE] [--o=FILE]\newline
+  [(--transpose|-t)]\newline  
+  [--point-prefix=$\fttoken{pt-prefix}$] [--point-suffix=$\fttoken{pt-suffix}$]\newline
+  [--coord-delimiter=$\fttoken{coord-delimiter}$]\newline
+  [--point-delimiter=$\fttoken{pt-del}$]\newline
+  [--set-prefix=$\fttoken{set-prefix}$] [--set-suffix=$\fttoken{set-suffix}$]\newline
+  [--mathematica] [--csv]\newline
+  [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\procarginseq{\ptseqsize}
+
+\procargout
+
+\begin{procarg}{--transpose | -t}
+  Transposes the matrix before writing it to the specified output.
+\end{procarg}
+
+\begin{procarg}{--point-prefix=$\fttoken{pt-prefix}$}
+  Sets $\fttoken{pt-prefix}$.
+\end{procarg}
+
+\begin{procarg}{--point-suffix=$\fttoken{pt-suffix}$}
+  Sets $\fttoken{pt-suffix}$.
+\end{procarg}
+
+\begin{procarg}{--coord-delimiter=$\fttoken{coord-delimiter}$}
+  Sets $\fttoken{coord-delimiter}$.
+\end{procarg}
+
+\begin{procarg}{--point-delimiter=$\fttoken{pt-del}$}
+  Sets $\fttoken{pt-del}$.
+\end{procarg}
+
+\begin{procarg}{--set-prefix=$\fttoken{set-prefix}$}
+  Sets $\fttoken{set-prefix}$.
+\end{procarg}
+
+\begin{procarg}{--set-suffix=$\fttoken{set-suffix}$}
+  Sets $\fttoken{set-suffix}$.
+\end{procarg}
+
+\begin{procarg}{--mathematica}
+  Sets 
+  \begin{align*}
+    \fttoken{pt-prefix} &\coloneqq \codef{\{} &
+    \fttoken{coord-delimiter} &\coloneqq \codef{,} &
+    \fttoken{pt-suffix} &\coloneqq \codef{\}} \\
+    \fttoken{set-prefix} &\coloneqq \codef{\{} &
+    \fttoken{pt-del} &\coloneqq \codef{,} &
+    \fttoken{set-suffix} &\coloneqq \codef{\}}
+  \end{align*}
+  to be used within $S[\fnP_i, \ptseqsize]$.
+\end{procarg}
+
+\begin{procarg}{--csv}
+  Sets 
+  \begin{align*}
+    \fttoken{pt-prefix} &\coloneqq \codef{} &
+    \fttoken{coord-delimiter} &\coloneqq \codef{\textvisiblespace } &
+    \fttoken{pt-suffix} &\coloneqq \codef{} \\
+    \fttoken{set-prefix} &\coloneqq \codef{} &
+    \fttoken{pt-del} &\coloneqq \formateol &
+    \fttoken{set-suffix} &\coloneqq \codef{}
+  \end{align*}
+  to be used within $S[\fnP_i, \ptseqsize]$.
+\end{procarg}
+
+\procargsilent
+
+\paragraph{Return format}
+
+This procedure returns a stream with the format $S[\fnP_i, \ptseqsize]$, of (\mref{eq:transduce-rmat-s}).

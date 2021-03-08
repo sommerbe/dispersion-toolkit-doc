@@ -10,9 +10,9 @@ to be used repeatedly within the externally encoded matrix. This matrix shall be
   M[\bm p_i \in \fnP] \coloneqq \fttoken{set-prefix}F[\bm p_0]\fttoken{pt-del}F[\bm p_1]\fttoken{pt-del}...F[\bm p_{n-1}]\fttoken{set-suffix}
 \end{align*}
 by an external software generating point sets. In case this software streams a sequence of point sets, $\fnP_i$, $i \in [0,\ptseqsize)$, these $M[\fnP_i]$ are concatenated without additional characters,
-\begin{align*}
+\begin{align}\mlabel{eq:transduce-rmat-s}
   S[\fnP_i, \ptseqsize] \coloneqq M[\fnP_0]M[\fnP_1]...M[\fnP_{\ptseqsize-1}].
-\end{align*}
+\end{align}
 
 The internally, decoded, point set sequence requires a definition of their domain boundary
 \begin{align*}
