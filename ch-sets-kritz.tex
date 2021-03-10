@@ -16,10 +16,10 @@ This construction yields a point set with smaller dispersion than the standard F
 \paragraph{Procedure}
 
 \begin{synopsis}
-  \subsynopsis{set-kritzinger}{(--fibonacci-index|--m)=$i$\newline 
+  \subsynopsis{set-kritzinger}{(--fibonacci-index|--m)=$m$\newline 
     [--o=FILE]\newline
     [--delimiter=CHARACTER] [--silent]}
-  \subsynopsis{set-kritzinger}{(--fibonacci-index|--m)=$i$\newline
+  \subsynopsis{set-kritzinger}{(--fibonacci-index|--m)=$m$\newline
     --compute-fibonacci-number|--cardinality [--no-pointset]\newline
     [--o=FILE]\newline
     [--delimiter=CHARACTER] [--silent]}
@@ -27,12 +27,12 @@ This construction yields a point set with smaller dispersion than the standard F
 
 \paragraph{Arguments}
 
-\begin{procarg}{--fibonacci-index=$i$ | --m=$i$ | --fibonacci-index $i$ | --m $i$}
-  The Fibonacci index $i$ of the Fibonacci number $F_i$ is required to satisfy $i > 2$. The cardinality of the resulting point set equals $F_i$.
+\begin{procarg}{--fibonacci-index=$m$ | --m=$m$ | --fibonacci-index $m$ | --m $m$}
+  The Fibonacci index $m$ of the Fibonacci number $F_m$ is required to satisfy $m > 2$. The cardinality of the resulting point set equals $F_m$.
 \end{procarg}
 
 \begin{procarg}{--compute-fibonacci-number | --cardinality}
-  Computes the point set’s cardinality and feeds it to the output stream. Here, this cardinality equals the Fibonacci number $F_i$, where $i$ is the Fibonacci index.
+  Computes the point set’s cardinality and feeds it to the output stream. Here, this cardinality equals the Fibonacci number $F_m$, where $m$ is the Fibonacci index.
 \end{procarg}
 
 \begin{procarg}{--no-pointset}
