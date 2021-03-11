@@ -7,6 +7,7 @@ In particular, this procedure focuses on how $\fnP_i$ change with $i$.
 
 \begin{synopsis}
   \subsynopsis{vis-psspy.py}{[--i=FILE]\newline
+  [--gridlines=$a\ b$]\newline
   [--delay=$t$]\newline
   [--image-path=$s$] [--image-ppi=$r_{\text{ppi}}$]\newline
   [--silent]}
@@ -15,6 +16,10 @@ In particular, this procedure focuses on how $\fnP_i$ change with $i$.
 \paragraph{Arguments}
 
 \procarginseq{\ptseqsize}
+
+\begin{procarg}{--gridlines=$a\ b$}
+  Sets the number of axis ticks $a$ (along $\sdim=0$) as well as $b$ (along $\sdim=1$). So $a$ sets the number of vertical lines, while $b$ sets the number of horizontal lines.
+\end{procarg}
 
 \begin{procarg}{--delay=$t$}
   Inserts a temporal delay of $t > 0$ seconds inbetween frames $f_i$ where each $f_i$ corresponds to the drawing $\fnP_i$.
