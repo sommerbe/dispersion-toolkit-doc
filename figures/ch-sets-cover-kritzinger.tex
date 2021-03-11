@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+  \datavisualization [scientific axes=clean, 
+  x axis={attribute=c0, length=0.6\textwidth, min value=0, max value=1},
+  y axis={attribute=c1, length=0.6\textwidth, min value=0, max value=1},
+  all axes=grid, 
+  visualize as scatter/.list={krit},
+  krit={style={color=black}},
+  ]
+data [set=krit, format=table, headline={c0,c1}, read from file=figures/ch-sets-cover-kritzinger.csv]
+;
+\end{tikzpicture}

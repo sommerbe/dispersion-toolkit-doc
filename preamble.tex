@@ -52,12 +52,14 @@
   ,block=none]{biblatex}
 \renewcommand*{\bibfont}{\footnotesize}
 
-% figures
+% figures and subfigures (package subcaption)
 \usepackage{graphicx}
+\usepackage{subcaption}
 \graphicspath{{figures/}}
 
 % picture drawing package
-\RequirePackage{tikz}
+\usepackage{tikz}
+\usetikzlibrary{datavisualization}
 
 % tabulars
 \usepackage{booktabs}
@@ -112,3 +114,6 @@
 \newcommand{\codeline}[1]{\begin{align*}
   \codef{#1}
 \end{align*}}
+
+% for debugging purposes
+% \usepackage{showframe}
