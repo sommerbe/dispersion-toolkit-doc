@@ -1,0 +1,30 @@
+%
+Another task would be to find a point set with minimal dispersion,
+\begin{align*}
+  \min_{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea).
+\end{align*}
+
+Starting with $\fnP_0$, an optimisation based on gradient descent would iterate through a sequence of point sets, $\fnP_i$, $i \in [0,\ptseqsize)$, to terminate with $\fnP_{\ptseqsize-1}$ as the estimated optimal point set,
+\begin{align*}
+  \fnP_{\ptseqsize-1} \approx \argmin_{\fnP_i} \fndisp(\fnP_i, \Rbox, \muarea).
+\end{align*}
+This approximation would be found by executing the command
+\begin{align*}
+  \codef{./bin/mindisp-gs}\ \ &\codef{--i p0.csv --tau=2e-15 --stepsize=0.01}\\
+  &\codef{--iteration-limit=10000}
+\end{align*}
+upon the initial point set stored in $\codef{p0.csv}$. 
+
+\paragraph{Analysing the optimisation}
+
+This optimisation procedure could be analysed regarding an inspection of each $\fnP_i$. The additional option $\codef{--pointset-sequence}$ to the above procedure emits these intermediate results, so
+\begin{align*}
+  \codef{./bin/mindisp-gs}\ \ &\codef{--i p0.csv --tau=2e-15 --stepsize=0.01}\\
+  &\codef{--iteration-limit=10000 --pointset-sequence}\\
+  &\codef{--o p0-opt.csv}
+\end{align*}
+would do it. The result stored in $\codef{p0-opt.csv}$ could be used for further processing. For instance, the question of how dispersion changes during the optimisation could be answered with executing the command
+\begin{align*}
+  \codef{./bin/disp-naamad --i p0-opt.csv --disp --ndisp --o disp.seq}
+\end{align*}
+and inspecting the file $\codef{disp.seq}$. Besides, these $\fnP_i$ from $\codef{p0-opt.csv}$ could be visualised with the procedure $\codef{python vis-pss.py}$. This spatial visual inspection has shown to be helpful regarding some research questions.
