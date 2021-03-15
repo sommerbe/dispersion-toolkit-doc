@@ -1,0 +1,77 @@
+%
+To begin with, a point set $\fnP_0$ shall be the Fibonacci lattice with Fibonacci index $m=10$ and Fibonacci number $F_m$. This point set is generated using
+\begin{align*}
+  \codef{./bin/set-fibonacci --m=10 --o=pts-fibo-10.csv}
+\end{align*}
+where $\codef{pts-fibo-10.csv}$ can be any file into which to store $\fnP_0$. Without the option $\codef{--o}$, $\fnP_o$ is streamed to standard output, which could be streamed as standard input into another (matching) procedure of this toolkit. The option $\codef{--m}$ is an abbreviated option name. The command
+\begin{align*}
+  \codef{./bin/set-fibonacci --fibonacci-index=10 --o=pts-fibo-10.csv}
+\end{align*}
+is equivalent. It results to
+\begin{verbatim}
+# fibonacci index = (10)
+# delimiter = ( )
+# coordinates of points:
+# (coord_0 coord_1):
+#d 0 0 1 1
+0.0000000000000000e+00 0.0000000000000000e+00
+1.8181818181818181e-02 3.8181818181818178e-01
+3.6363636363636362e-02 7.6363636363636356e-01
+...
+...
+...
+9.6363636363636362e-01 2.3636363636363455e-01
+9.8181818181818181e-01 6.1818181818181728e-01
+#eos
+\end{verbatim}
+where $\codef{...}$ leaves out some lines, and where comment lines $\codef{\# ...}$ are usually ignored. Notice however, that the line $\codef{\#d 0 0 1 1}$ denotes the problem's domain boundary $\fdom{}$, being therefore important. It can not be left out.
+
+Classic dispersion with using rectangular regions, bounded by $\fdom{}$, can for instance be computed with the command line
+\begin{align*}
+  \codef{./bin/disp-naamad --i=pts-fibo-10.csv --disp}
+\end{align*}
+where $\codef{--disp}$ specifies the measure to be computed. This command additionally supports to compute dispersion multiplied by the number of $n$ points within this set, using $\codef{--ndisp}$. So
+\begin{align*}
+  \codef{./bin/disp-naamad --i=pts-fibo-10.csv --disp --ndisp}
+\end{align*}
+would compute both dispersion and its multiplication by $n$,
+\begin{verbatim}
+# source = (pts-fibo-10.csv)
+# point set sequence size = (1)
+# (dispersion,n*dispersion)
+#d 0 0 inf inf
+3.5702479338843643e-02 1.9636363636364003e+00
+#eos
+\end{verbatim}
+as a $\sdim=2$ dimensional point set with cardinality one.
+
+\paragraph{Working with sequences}
+
+The commands, based on Linux bash,
+\begin{align*}
+&\codef{./bin/set-fibonacci --m=10 > pts-seq.csv} \\
+&\codef{./bin/set-fibonacci --m=11 >> pts-seq.csv} \\
+&\codef{./bin/set-fibonacci --m=12 >> pts-seq.csv} \\
+&\codef{./bin/set-fibonacci --m=13 >> pts-seq.csv}
+\end{align*}
+generate a sequence of point sets, each having a different cardinality. Therefore, this sequence may be perceived to be dynamic. Computing dispersion, similar to above, with
+\begin{align*}
+  \codef{./bin/disp-naamad --i=pts-seq.csv --disp --ndisp}
+\end{align*}
+would result in
+\begin{verbatim}
+# source = (pts-seq.csv)
+# point set sequence size = (4)
+# (dispersion,n*dispersion)
+#d 0 0 inf inf
+3.5702479338843643e-02 1.9636363636364003e+00
+2.2219416740311061e-02 1.9775280898876844e+00
+1.3792438271608858e-02 1.9861111111116756e+00
+8.5468511116433103e-03 1.9914163090128914e+00
+#eos
+\end{verbatim}
+to be streamed to standard output. This result could be stored to $\codef{sd.csv}$ by adding the option $\codef{--o sd.csv}$, so
+\begin{align*}
+  \codef{./bin/disp-naamad --i=pts-seq.csv --disp --ndisp --o=sd.csv}
+\end{align*}
+would do it. Notice that the $\codef{=}$ character could be replaced by a whitespace character as indicated.
