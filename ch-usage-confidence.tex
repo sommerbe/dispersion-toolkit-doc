@@ -1,0 +1,23 @@
+%
+A pseudo-random pointset $\fnP_i$ could be constructed in diverse ways. One of such approaches could take a deterministic point set $\fnP_{\text{determ},0}$, stored in the file $\codef{pts.csv}$, to be randomised. The command
+\begin{align*}
+  \codef{./bin/set-cswap }&\codef{--i=pts.csv --o=pts.seq}\\
+  &\codef{--axis=-1 --repeat=512}
+\end{align*}
+swaps 2 coordinates of a randomly chosen pair of distinct points which is repeated 512 times. The resulting point set sequence $\fnP_i$ is of size $\ptseqsize=512$. Any other method of generating pseudo-random point set sequences would be fine. The important point is to ensure having $\ptseqsize \gg 1$.
+
+Next, a measure is computed on each random point set $\fnP_i$. A possible measure could be dispersion based on axis aligned boxes, in $\sdim$ dimensions, bounded by the problem domain. The command
+\begin{align*}
+  \codef{./bin/disp-naamad --i=pts.seq --disp --ndisp --o=dsp.seq}
+\end{align*}
+computes this dispersion for each random $\fnP_i$ and stores the resulting $\sdim=2$ dimensional point set with cardinality $512$ to the file $\codef{dsp.seq}$. Here, the first axis represents $\codef{--disp}$, while the second one represents $\codef{--ndisp}$. It is important to keep $\ptseqsize$, here $\ptseqsize=512$, large enough to ensure statistical meaningful results. In addition, each pseudo-random $\fnP_i$ is supposed to fullfill the i.i.d. property.
+
+Finally, a confidence interval of dispersion could be estimated. To this end,
+\begin{align*}
+  \codef{./bin/stat-confidence --i=dsp.seq --o=cnf.csv --2sigma}
+\end{align*}
+applies the $2\sigma$ rule to the empirical distribution of dispersion values found in the file $\codef{dsp.seq}$. It streams the resulting $\sdim=2$ dimensional point set of cardinality 3 to the file $\codef{cnf.csv}$. The option $\codef{--mean}$ would compute the arithmetic mean of dispersion, so
+\begin{align*}
+  \codef{./bin/stat-confidence --i=dsp.seq --o=cnf.csv --mean}
+\end{align*}
+would lead to a singular $\sdim=2$ dimensional point, in the present example. Notice that both $\codef{--2sigma}$ and $\codef{--mean}$ could be specified together within a single command call. Here, many more options exists, for instance options to compute inter quartil ranges with and without extended whiskers used for statistical box plots, customary percentiles. This procedure as well supports stacked graphs as point set layout. For more details, please refer to this procedure's documentation.
