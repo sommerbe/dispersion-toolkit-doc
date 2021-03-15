@@ -35,13 +35,34 @@ with the sum being dimensionally independent.
   [(--percentiles|--p)=$q_0\ q_1\ ...\ q_t$]\newline
   [--2sigma] [--iqr] [--iqr-box] [--mean]\newline
   [--silent]}
+  \subsynopsis{stat-confidence}{[--i=FILE] [--o=FILE]\newline
+  --stacked-graphs [--stacked-graphs-deviation-limit=$\epsilon$]\newline
+  [(--percentiles|--p)=$q_0\ q_1\ ...\ q_t$]\newline
+  [--2sigma] [--iqr] [--iqr-box] [--mean]\newline
+  [--silent]}
 \end{synopsis}
 
 \paragraph{Arguments}
 
-\procarginseq{1}
+\procarginseq{\ptseqsize}
 
 \procargout
+
+\begin{procarg}{--stacked-graphs}
+  Computes the statistics of point sets $\fnP_j$ formatted as $g$ stacked graphs, with graph index $i_g \geq 0$, with arguments $p_{i,0}$ and function values $p_{i,1+i_g}$.
+  
+  In this mode, the algorithm expects $\ptseqsize > 1$. Otherwise, $\ptseqsize = 1$.
+  
+  The statistics are computed along $p_{i,1+i_g} \in \fnP_j$, $\forall j$, while having both $i$ and $i_g$ fixed for each $\bm s_{\cdot,i+i_g n}$ of argument $p_{i,0}$ and of graph $i_g$. Internally, the algorithm infers an intermediate normalised form as if this option has been omitted. So values such as $\bm s_j$ apply to this normalised form. After having computed the specified statistics, the algorithm rearranges $\bm s_j$ to resemble the stacked graphs layout again. Section \enquote{Return format of stacked graphs layout} provides the details in this regard.
+\end{procarg}
+
+\begin{procarg}{--stacked-graphs-deviation-limit=$\epsilon$}
+  Checks the boundary condition
+  \begin{align*}
+    \abs{p_{i,0} - p_{j,0}} \leq \epsilon,\ \forall i,j \in [0,n).
+  \end{align*}
+  Violations of this condition are streamed to standard output error $\codef{std::cerr}$.
+\end{procarg}
 
 \begin{procarg}{--percentiles=$q_0\ q_1\ ...\ q_t$ | --p=$q_0\ q_1\ ...\ q_t$}
   Defines a list of percentiles $q_j \in (q_0, q_1, ..., q_t)$ to compute $\bm s_j = \widehat{\bm p}_{i(q_j)}\ \forall j \in [0,t]$.
@@ -60,24 +81,61 @@ with the sum being dimensionally independent.
 \end{procarg}
 
 \begin{procarg}{--mean}
-  Computes the arithmetic mean $M(\fnP_i)$ according to (\mref{eq:stat-mean}), and therefore $\bm m_{i} = M(\fnP_i)$.
+  Computes the arithmetic mean $M(\fnP_0)$ according to (\mref{eq:stat-mean}), and therefore $\bm s_{j+1} = M(\fnP_0)$.
 \end{procarg}
 
 \procargsilent
-\clearpage
-\paragraph{Return format}
 
-The statistical measurements $\bm s_j$ based on the method of confidence intervals are streamed to the selected output according to
+\paragraph{Return format of normal layout}
+
+The $k = \abs{\{\bm s_j\}_j}$ statistical measurements $\bm s_j$ based on the method of confidence intervals, or arithmetic means, are streamed to the selected output according to
 \begin{align*}
   &\bm s_0\formateol\\
   &\bm s_1\formateol\\
   &\vdots \\
-  &\bm s_j\formateol\\
+  &\bm s_{k-1}\formateol\\
   &\formateos\formateol
 \end{align*}
-in literal format, not in binary format, as long as $j \geq 0$, i.e. $\bm q$ is given either explicitly or implicitly. In addition, the measurements concerning the  arithmetic mean, $\bm m_0$, feed the output stream
+in literal format, not in binary format.
+
+\paragraph{Return format of stacked graphs layout}
+
+With this layout, $\bm s_j$ are rearranged to match the shape of $g > 0$ graphs with the $\sdim=1$ dimensional arguments $p_{i,0}$. With character based coordinate delimiter $\fttoken{delim}$ and vector $\bm s_{\cdot,i} \coloneqq \{s_{r,i}\}_{r \in [0,k)}$, for $k$ statistics, the algorithm finally returns
 \begin{align*}
-  &\bm m_0\\
+  &p_{0,0}\fttoken{delim}\bm s_{\cdot,0}\fttoken{delim}\bm s_{\cdot,0+n}...\fttoken{delim}\bm s_{\cdot,0+(g-1)n}\formateol\\
+  &p_{1,0}\fttoken{delim}\bm s_{\cdot,1}\fttoken{delim}\bm s_{\cdot,1+n}...\fttoken{delim}\bm s_{\cdot,1+(g-1)n}\formateol\\
+  &\vdots \\
+  &p_{n-1,0}\fttoken{delim}\bm s_{\cdot,n-1}\fttoken{delim}\bm s_{\cdot,2n-1}...\fttoken{delim}\bm s_{\cdot,gn-1}\formateol\\
   &\formateos\formateol
 \end{align*}
-in literal format.
+in literal format. For instance, the mean statistics of the stacked graph
+\begin{verbatim}
+#d 0 10 10 100
+1 10
+2 11
+3 12
+4 13
+#eos
+#d 0 10 10 100
+1 20
+2 21
+3 22
+4 23
+#eos
+#d 0 10 10 100
+1 30
+2 31
+3 32
+4 33
+#eos
+\end{verbatim}
+would result to
+\begin{verbatim}
+#d 0 10 10 100
+1.0000000000000000e+00 2.0000000000000000e+01
+2.0000000000000000e+00 2.1000000000000000e+01
+3.0000000000000000e+00 2.2000000000000000e+01
+4.0000000000000000e+00 2.3000000000000000e+01
+#eos
+\end{verbatim}
+in this format. Therein, values of the first column are the arguments, and those of the second column are the mean values for each argument to the left. This format becomes useful for plotting these graphs. In case of computing percentiles, such values are positioned to the right of their function arguments, so that these could be plotted as graphs as well.
