@@ -1,0 +1,24 @@
+%
+Another common scenario is working together with Mathematica. Due to complexity, this cooperation is currently limited to transducing matrices.
+
+\paragraph{Reading from Mathematica's layout of matrices}
+
+A Mathematica matrix
+\begin{verbatim}
+{{0.0e+00,0.0e+00},{7.6923076923076927e-02,3.8461538461538464
+e-01},{1.5384615384615385e-01,7.6923076923076927e-01}}
+\end{verbatim}
+shall be stored within the file \codef{nb.mat}. Using this point set to compute dispersion, or other measures, requires the intermediate step to convert it into the internal format of point set sequences of this toolkit. This transduction is carried out with the command
+\begin{align*}
+  \codef{./bin/read-matrix --i=nb.mat --o=pts.csv --mathematica}
+\end{align*}
+which stores the correct format into the file $\codef{pts.csv}$, while any other filename including file extension would be fine.
+
+
+\paragraph{Writing to Mathematica's layout of matrices}
+
+Conversely, this transduction is reversible. The command
+\begin{align*}
+  \codef{./bin/write-matrix --i=pts.csv --o=nb2.mat --mathematica}
+\end{align*}
+writes the point sets $\fnP_i$, $i\in[0,\ptseqsize)$, stored within $\codef{pts.csv}$, to the file $\codef{n2.mat}$. For $\ptseqsize>1$, the resulting file would contain multiple matrices of the specified format.
