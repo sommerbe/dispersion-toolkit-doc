@@ -1,0 +1,41 @@
+%
+A useful visual debugging, or inspection, tool is to visualise point set sequences, stored in the file $\codef{pts.seq}$. Here, any other filename would do it, for instance $\codef{pts-seq.csv}$ would be fine as well. This file includes the domain boundary for each point set therein, which becomes essential for this visualisation task since the $\sdim=2$ dimensional plotter needs to properly limit both axes in preventing false impressions.
+
+Visualising such a sequence is made simple by having only to execute the command
+\begin{align*}
+  \codef{python ./bin/vis-pss.py --i=pts.seq}
+\end{align*}
+requiring matplotlib, numpy and python3 as dependencies. Notice, however, that the computational performance of this procedure is non-optimal. Particularly large point sets may require substantial time to be drawn.
+
+For the sequence $\fnP_i$, $i \in [0,\ptseqsize)$, this command essentially generates an animation of $\ptseqsize$ frames on the fly. These frames could be stored permanently to
+\begin{align*}
+  \codef{f0.png}, \codef{f1.png}, ..., \codef{f$\ptseqsize-1$.png}
+\end{align*}
+following the pattern $\codef{f\{i\}.png}$. The option $\codef{--image-path=f{i}.png}$ generates these files. So the above command is extended with
+\begin{align*}
+  \codef{python ./bin/vis-pss.py --i=pts.seq --image-path=f\{i\}.png}
+\end{align*}
+for which the resolution of these images could optionally be specified with $\codef{--image-ppi=600}$.
+
+\paragraph{Greatest empty rectangles}
+
+The quest towards finding a point set with minimal dispersion may require to analyse its greatest empty rectangles, either those being local or global. This holds for dispersion involving rectangles, compared to other regions such as balls and triangles. The command
+\begin{align*}
+  \codef{./bin/disp-combinatorial --i=pts.csv --o=box.csv --boxes}
+\end{align*}
+computes all locally greatest empty rectangles, bounded by the problem domain specified in $\codef{pts.csv}$ storing a point set. These rectangles are stored permanently to $\codef{box.csv}$. With this preprocessing, 
+\begin{align*}
+  \codef{./bin/vis-rectangles.py --i=box.csv}
+\end{align*}
+draws these rectangles within the problem domain boundary stored within $\codef{box.csv}$. Notice that this command accepts the option $\codef{--image-path}$ as well, besides quite a few other customisation options. Furthermore, not all locally greatest empty rectangles need to be streamed. For instance,
+\begin{align*}
+  \codef{./bin/disp-combinatorial }&\codef{--i=pts.csv --o=box.csv}\\
+  &\codef{--greatest-box}
+\end{align*}
+emits the globally greatest rectangle only, and
+\begin{align*}
+  \codef{./bin/disp-combinatorial }&\codef{--i=pts.csv --o=box.csv}\\
+  &\codef{--boxes --box-area-min=0.2}
+\end{align*}
+streams only those rectangles having at least an area of $0.2$.
+
