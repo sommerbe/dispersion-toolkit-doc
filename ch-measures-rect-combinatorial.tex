@@ -1,13 +1,13 @@
 %
-Besides algorithmic vigour, exhaustively iterating through all locally greatest empty rectangles solves $\fndisp(\fnP_i, \Rrect, \muarea)$ from (\mref{eq:disp-range}) as well. The idea behind this approach is to provide an algorithmic solution being easy to implement to be consulted as a ground truth. Developing sophisticated algorithms require trusted references, helping to find implementation mistakes. Besides, such an exhaustive search allows to cover detailed statistics, for instance concerning the number of rectangles, interiour rectangles, exteriour rectangles, rectangles whose area matches a specified range.
+Besides algorithmic vigour, exhaustively iterating through all locally greatest empty hyperboxes solves $\fndisp(\fnP_i, \Rrect, \muarea)$ from (\mref{eq:disp-range}) as well. The idea behind this approach is to provide an algorithmic solution being easy to implement to be consulted as a ground truth. Developing sophisticated algorithms require trusted references, helping to find implementation mistakes. Besides, such an exhaustive search allows to cover detailed statistics, for instance concerning the number of hyperboxes, interiour hyperboxes, exteriour hyperboxes, hyperboxes whose area matches a specified range.
 
-For $\fnP_i \subset \setR^2$, the algorithm considers all rectangles $\bm r \in \Rrect$ either being bounded by some $\bm p_i$, or being bounded by the problem domain. Therefore, $\bm r$ are not on the torus. This step already involves worst case $\bigO(n^4)$ in time, due to combinatorially considering $4$ sides of $\bm r$. However, the implementation facilitates faster computations through ensuring boundary conditions imposed by $\bm r$. Namely, coordinates of $\bm r$ along dimension $d$ are to be ordered ascendingly.
+For $\fnP_i \subset \setR^{\sdim}$, $\sdim$ dimensions, the algorithm considers all hyperboxes $\bm r \in \Rrect$ either being bounded by some $\bm p_i$, or being bounded by the problem domain. Therefore, $\bm r$ is not on the torus. This step already involves worst case $\bigO(n^{2\sdim})$ in time, due to combinatorially considering $2\sdim$ sides of $\bm r$. However, the implementation facilitates slightly faster computations through ensuring boundary conditions imposed by $\bm r$. Namely, coordinates of $\bm r$ along dimension $d$ are to be ordered ascendingly. Additionally concerning interiour hyperboxes, sorting all $\bm p_i$ along each axis $d$ independently accelerates this search by a factor of $2$. This index structure leads to $\bigO(n (\sdim+1))$ in space.
 
-Once a rectangle is determined, the final innermost loop ensures $\bm r$ to be empty, except on its boundaries. This loop increases the computational amount to worst case $\bigO(n^5)$ in time, while any case $\bigO(n)$ in space remains.
+Once a hyperbox is determined, the final innermost loop ensures $\bm r$ to be empty, except on its boundaries. This loop increases the computational amount to worst case $\bigO(n^{2\sdim + 1})$ in time, while any case $\bigO(n (\sdim+1))$ in space remains.
 
-All $\bm r \in \Rrect$ satisfy these properties, to be locally greatest empty rectangles within the problem domain. The latter is defined by $\fnP_i$ itself. This problem domain may vary between $\fnP_i$.
+All $\bm r \in \Rrect$ satisfy these properties, to be locally greatest empty hyperboxes within the problem domain. The latter is defined by $\fnP_i$ itself. This problem domain may vary between $\fnP_i$.
 
-Used by dispersion, here, $\muarea(\bm r)$ measures the rectangle's area as a multiplication of its side lengths.
+Used by dispersion, here, $\muarea(\bm r)$ measures the axes-aligned hyperbox's volume as a multiplication of its side lengths.
 
 During this exhaustive search, additional information may be gathered. In summary, this procedure may compute
 \begin{enumerate}
@@ -59,19 +59,19 @@ this implementation remains computationally feasible.
 \end{procarg}
 
 \begin{procarg}{--boxes}
-  Streams all $\bm r \in \fnP_i$, including interiour and exteriour ones, to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+  Streams all $\bm r \in \fnP_i$, including interiour and exteriour ones, to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $2\sdim$ dimensional point.
 \end{procarg}
 
 \begin{procarg}{--interior-boxes}
-  Streams only interiour $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+  Streams only interiour $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $2\sdim$ dimensional point.
 \end{procarg}
 
 \begin{procarg}{--greatest-box}
-  Streams only the first globally greatest $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $d=4$ dimensional point.
+  Streams only the first globally greatest $\bm r \in \fnP_i$ to the specified output. Each $\bm r$ remains on a distinct line, essentially representing a $2\sdim$ dimensional point.
 \end{procarg}
 
 \begin{procarg}{--box-area}
-  Streams the tuple $\mleft(\bm r, \muarea(\bm r)\mright)$ of selected $\bm r$ to the specified output. These $\bm r$ could be all rectangles of $\Rrect$, or only interiour ones, or only the first globally greatest one. This option appends $\muarea(\bm r)$ to the list of coordinates of $\bm r$, amounting to a $d=5$ dimensional point. However, in case of hiding coordinates of $\bm r$, this $\muarea(\bm r)$ remains the only coordinate to stream. Each such tuple is situated on a distinct line.
+  Streams the tuple $\mleft(\bm r, \muarea(\bm r)\mright)$ of selected $\bm r$ to the specified output. These $\bm r$ could be all hyperboxes of $\Rrect$, or only interiour ones, or only the first globally greatest one. This option appends $\muarea(\bm r)$ to the list of coordinates of $\bm r$, amounting to a $2\sdim+1$ dimensional point. However, in case of hiding coordinates of $\bm r$, this $\muarea(\bm r)$ remains the only coordinate to stream. Each such tuple is situated on a distinct line.
 \end{procarg}
 
 \begin{procarg}{--box-area-min=$a_0$}
