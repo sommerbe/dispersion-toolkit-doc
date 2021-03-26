@@ -33,6 +33,15 @@ This algorithm reads $S[\fnP_i, \ptseqsize]$.
   [--mathematica] [--csv]\newline
   [--delimiter=$\fttoken{delimiter}$]\newline
   [--silent]}
+  \subsynopsis{read-matrix}{[--i=FILE] [--o=FILE]\newline
+  --domain-boundary-unity\newline
+  [--point-prefix=$\fttoken{pt-prefix}$] [--point-suffix=$\fttoken{pt-suffix}$]\newline
+  [--coord-delimiter=$\fttoken{coord-delimiter}$]\newline
+  [--point-delimiter=$\fttoken{pt-del}$]\newline
+  [--set-prefix=$\fttoken{set-prefix}$] [--set-suffix=$\fttoken{set-suffix}$]\newline
+  [--mathematica] [--csv]\newline
+  [--delimiter=$\fttoken{delimiter}$]\newline
+  [--silent]}
 \end{synopsis}
 
 \paragraph{Arguments}
@@ -40,6 +49,10 @@ This algorithm reads $S[\fnP_i, \ptseqsize]$.
 \procarginseq{\ptseqsize}
 
 \procargout
+
+\begin{procarg}{--domain-boundary-unity}
+  Sets $\fdom = [0,1]^d$.
+\end{procarg}
 
 \begin{procarg}{--point-prefix=$\fttoken{pt-prefix}$}
   Sets $\fttoken{pt-prefix}$.
