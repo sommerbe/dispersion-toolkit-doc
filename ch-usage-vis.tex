@@ -27,15 +27,40 @@ computes all locally greatest empty rectangles, bounded by the problem domain sp
 \begin{align*}
   \codef{./bin/vis-rectangles.py --i=box.csv}
 \end{align*}
-draws these rectangles within the problem domain boundary stored within $\codef{box.csv}$. Notice that this command accepts the option $\codef{--image-path}$ as well, besides quite a few other customisation options. Furthermore, not all locally greatest empty rectangles need to be streamed. For instance,
+draws these rectangles within the problem domain boundary.\footnote{Currently, the problem domain boundary of a rectangle set is not stored within this file, such as within $\codef{box.csv}$. Currently, this domain needs to be specified manually with $\codef{--domain}$ when executing $\codef{./bin/vis-rectangles.py}$, if not $[0,1]^2$.} Notice that this command accepts the option $\codef{--image-path}$ as well, besides quite a few other customisation options. Furthermore, not all locally greatest empty rectangles need to be streamed. For instance,
 \begin{align*}
   \codef{./bin/disp-combinatorial }&\codef{--i=pts.csv --o=box.csv}\\
   &\codef{--greatest-box}
 \end{align*}
-emits the globally greatest rectangle only, and
+emits the globally greatest rectangle only.
+
+\paragraph{Finding area of greatest empty rectangle}
+
+The area $a$ of the greatest empty rectangle is found by executing the command
+\begin{align*}
+  \codef{./bin/disp-combinatorial --i=pts.csv --greatest-box --box-area}
+\end{align*}
+which returns a $\sdim=5$ dimensional point set whereas the last axis\footnote{The last axis corresponds to the last number of each number tuple, stored in a distinct line.} relates to the area of the rectangle. For instance,
+\begin{verbatim}
+2e-01 3e-01 8e-01 7e-01 3.64e-01
+#eos
+\end{verbatim}
+is an axis-aligned rectangle $[\num{2e-1},\num{8e-1}] \times [\num{3e-1},\num{7e-1}]$ with area $a=\num{3.64e-01}$.
+
+\paragraph{Greatest empty rectangles with minimum area}
+
+Having found a minimum rectangle area $a$, 
 \begin{align*}
   \codef{./bin/disp-combinatorial }&\codef{--i=pts.csv --o=box.csv}\\
-  &\codef{--boxes --box-area-min=0.2}
+  &\codef{--boxes --box-area-min=$a$}
 \end{align*}
-streams only those rectangles having at least an area of $0.2$.
-
+streams only those rectangles having at least an area $\geq a$, for instance
+\begin{align*}
+  \codef{./bin/disp-combinatorial }&\codef{--i=pts.csv --o=box.csv}\\
+  &\codef{--boxes --box-area-min=3.64e-1}
+\end{align*}
+stores all rectangles satisfying this condition to $\codef{box.csv}$. Again,
+\begin{align*}
+  \codef{./bin/vis-rectangles.py --i=box.csv}
+\end{align*}
+draws these rectangles.
