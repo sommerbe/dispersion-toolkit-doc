@@ -1,0 +1,55 @@
+Estimates gradients of a sequence of values, along each dimension.
+
+Supported gradient computation methods:
+
+\begin{enumerate}
+  \item Finite forward differences
+\end{enumerate} 
+
+In case of dealing with graphs, for which the first dimension represents the function’s arguments, computing the gradients is not done for this first axis.
+
+\paragraph{Procedure}
+
+\begin{synopsis}
+  \subsynopsis{ana-convergence}{[--i=FILE] [--o=FILE]\newline
+  [--absolute] [--ffd] [--silent]}
+  \subsynopsis{ana-convergence}{--graph-layout [--i=FILE] [--o=FILE]\newline
+  [--absolute] [--ffd] [--silent]}
+\end{synopsis}
+
+\paragraph{Arguments}
+
+\begin{procarg}{--absolute}
+  Ensures that the approximated gradients, computed by the specified method, are non-negative.
+\end{procarg}
+
+\begin{procarg}{--ffd}
+  Computes finite forward differences on the sequence of values to approximate the gradients.
+\end{procarg}
+
+\begin{procarg}{--graph-layout}
+  Specifies that the first axis, or dimension, of the receiving point set represents the arguments of a function mapping to all other values. So each $\sdim$ dimensional point of this set is interpreted that
+
+\begin{itemize}
+  \item the first coordinate is the argument to a function,
+  \item the second coordinate is the value of the first graph, until
+  \item the $\sdim$-th coordinate is the value of the ($\sdim$-1)th graph.
+\end{itemize}
+
+This option requires the point set $\fnP$ to have a least d=2 dimensions.
+\end{procarg}
+
+\begin{procarg}{--i=FILE | --i FILE}
+  Retrieves a point set $\fnP$ of dimension $\sdim$ from \codef{FILE}. Its absence is substituted by stdin. The end of a point set, which equals the line \codef{\#eos}, starts the algorithm.
+\end{procarg}
+
+\procargout
+
+\procargsilent
+
+\paragraph{Return format}
+
+The returned point set has equal dimension compared to the given input. But its cardinality is reduced, depending on the chosen method of how to compute the gradient  approximations.
+
+In case of --graph-layout, values of the first axis remain constant.
+
